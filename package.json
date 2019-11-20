@@ -1,0 +1,61 @@
+{
+  "name": "yllet",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "devDependencies": {
+    "@babel/cli": "^7.7.0",
+    "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.6.2",
+    "@babel/plugin-transform-object-assign": "^7.2.0",
+    "@babel/plugin-transform-runtime": "^7.6.2",
+    "@babel/preset-env": "^7.7.1",
+    "@babel/preset-react": "^7.7.0",
+    "@babel/runtime": "^7.7.2",
+    "babel-jest": "^24.9.0",
+    "babel-loader": "^8.0.6",
+    "codecov": "^3.6.1",
+    "core-js": "3",
+    "expect": "^21.0.0",
+    "husky": "^3.0.9",
+    "isomorphic-fetch": "^2.2.1",
+    "jest": "^24.9.0",
+    "jest-mock": "^21.0.0",
+    "karma": "^4.4.1",
+    "karma-browserstack-launcher": "^1.4.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.5",
+    "karma-sourcemap-loader": "^0.3.7",
+    "karma-webpack": "^4.0.2",
+    "lerna": "^3.18.4",
+    "mocha": "^6.2.2",
+    "prettier": "^1.19.1",
+    "pretty-quick": "^2.0.1",
+    "rimraf": "^3.0.0",
+    "rollup": "^1.27.2",
+    "rollup-plugin-babel": "^4.3.3",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-json": "^4.0.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "webpack": "^4.41.2"
+  },
+  "scripts": {
+    "bootstrap": "lerna bootstrap --use-workspaces",
+    "build": "lerna run build",
+    "start": "lerna run start",
+    "test": "yarn build && yarn test:coverage && yarn test:integration && yarn test:browsers",
+    "test:unit": "jest --config testing/jest.config.js packages/**",
+    "test:integration": "jest --config testing/jest.config.js testing/integration",
+    "test:coverage": "yarn test:unit --coverage",
+    "test:browsers": "NODE_ENV=test karma start testing/karma.conf.js",
+    "postinstall": "lerna bootstrap"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  },
+  "version": "2.0.0-alpha.1"
+}

@@ -1,0 +1,39 @@
+{
+  "name": "@yllet/client",
+  "private": false,
+  "version": "2.0.0-alpha.2",
+  "repository": "ylletjs/yllet",
+  "description": "JavaScript client for the WordPress REST API",
+  "author": "Fredrik Forsmo <fredrik.forsmo@gmail.com>",
+  "keywords": [
+    "wordpress",
+    "api",
+    "client"
+  ],
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "files": [
+    "README.md",
+    "lib/"
+  ],
+  "bugs": {
+    "url": "https://github.com/ylletjs/yllet/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
+    "preversion": "yarn build"
+  },
+  "dependencies": {
+    "deep-extend": "^0.6.0",
+    "isomorphic-form-data": "^2.0.0",
+    "to-snake-case": "^1.0.0",
+    "url-join": "^4.0.0"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jest-fetch-mock": "^2.1.2"
+  }
+}

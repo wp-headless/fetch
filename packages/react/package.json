@@ -1,0 +1,44 @@
+{
+  "name": "@yllet/react",
+  "private": false,
+  "version": "2.0.0-alpha.2",
+  "repository": "ylletjs/yllet",
+  "description": "React bindings for Yllet",
+  "author": "Fredrik Forsmo <fredrik.forsmo@gmail.com>",
+  "keywords": [
+    "wordpress",
+    "api",
+    "client",
+    "react"
+  ],
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "files": [
+    "README.md",
+    "lib/"
+  ],
+  "bugs": {
+    "url": "https://github.com/ylletjs/yllet/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
+    "preversion": "yarn build"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "invariant": "^2.2.4",
+    "prop-types": "^15.7.2",
+    "qs": "^6.7.0",
+    "react": "^16.8.6",
+    "url-join": "^4.0.0"
+  },
+  "devDependencies": {
+    "enzyme": "^3.9.0",
+    "enzyme-adapter-react-16": "^1.12.1",
+    "react-dom": "^16.8.6"
+  },
+  "license": "MIT"
+}

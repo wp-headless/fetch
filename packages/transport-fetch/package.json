@@ -1,0 +1,39 @@
+{
+  "name": "@yllet/transport-fetch",
+  "private": false,
+  "version": "2.0.0-alpha.1",
+  "repository": "ylletjs/yllet",
+  "description": "Simple fetch http client transport",
+  "author": "Andrew McLagan <andrew.mclagan@gmail.com>",
+  "keywords": [
+    "wordpress",
+    "fetch",
+    "api",
+    "client"
+  ],
+  "main": "lib/cjs/index.js",
+  "module": "lib/esm/index.js",
+  "files": [
+    "README.md",
+    "lib/"
+  ],
+  "bugs": {
+    "url": "https://github.com/ylletjs/yllet/issues"
+  },
+  "scripts": {
+    "prebuild": "rimraf lib",
+    "build": "yarn build:cjs && yarn build:esm",
+    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
+    "preversion": "yarn build"
+  },
+  "dependencies": {
+    "base-64": "^0.1.0",
+    "isomorphic-form-data": "^2.0.0",
+    "querystringify": "^2.1.1"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "jest-fetch-mock": "^2.1.2"
+  }
+}

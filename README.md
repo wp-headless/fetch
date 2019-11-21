@@ -206,6 +206,6 @@ The architecture of `wp-fetch` allows for
 ## Thanks 
 
 
-![alt text](https://beam-wordpress-legacy.s3.ap-southeast-2.amazonaws.com/fetch-k9.png "BrowserStack Logo")
+![alt text](https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo%402x.png "BrowserStack Logo")
 
 Thanks to [BrowserStack](https://browserstack.com) for lending us their amazing infrastructure to give us automated browser coverage

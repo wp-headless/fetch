@@ -10,7 +10,7 @@
 
 # WP-Fetch
 
-A javascript client for the Wordpress API that works both in the browser and in Node. The goals of this project are: Tiny footprint, > 95% code coverage, browser tested down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
+> A javascript client for the Wordpress API that works both in the browser and in Node. The goals of this project are: Tiny footprint, > 95% code coverage, browser tested down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
 ## Installation
 

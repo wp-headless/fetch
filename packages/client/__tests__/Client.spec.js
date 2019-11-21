@@ -38,7 +38,7 @@ describe('Client', () => {
       endpoint: '',
       namespace: 'wp/v2',
       config: {
-        referrer: 'yllet',
+        referrer: 'wp-fetch',
         headers: {
           'Content-Type': 'application/json'
         }

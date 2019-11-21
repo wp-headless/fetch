@@ -12,11 +12,53 @@ A javascript client for the Wordpress API that works both in the browser and in 
 The architecture of WP-Fetch allows you to specify your own transport layer such as fetch or axios.
 
 Yarn
+
 ```bash
 yarn add @wp-fetch/client @wp-fetch/transport-fetch
 ```
 
 NPM
+
 ```bash
 npm install @wp-fetch/client @wp-fetch/transport-fetch
+```
+
+## Usage
+
+Creating a client instance with transport layer and bound to the endpoint of your Wordpress install:
+
+```javascript
+import Client from '@wp-fetch/client';
+import FetchTransport from '@wp-fetch/transport-fetch';
+
+const client = new Client({
+  endpoint: 'https://demo.wp-api.org/wp-json',
+  transport: new FetchTransport()
+});
+```
+
+You may also use another transport layer such as axios:
+
+```javascript
+import Client from '@wp-fetch/client';
+import AxiosTransport from '@wp-fetch/transport-axios';
+
+const client = new Client({
+  endpoint: 'https://demo.wp-api.org/wp-json',
+  transport: new AxiosTransport()
+});
+```
+
+Fetching posts using async await:
+
+```javascript
+const posts = await client.posts().get();
+```
+
+Or with promises:
+
+```javascript
+client.posts().get().then(posts => {
+  console.log(posts);
+});
 ```

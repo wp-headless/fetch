@@ -4,7 +4,7 @@ import expect from 'expect';
 
 const client = new Client({
   transport: new AxiosTransport(),
-  endpoint: 'https://kinsta.com/wp-json/wp/v2'
+  endpoint: 'https://demo.wp-api.org/wp-json/wp/v2'
 });
 
 describe('Axios Integration Suite', () => {

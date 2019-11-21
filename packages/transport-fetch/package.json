@@ -1,7 +1,7 @@
 {
   "name": "@wp-fetch/transport-fetch",
   "private": false,
-  "version": "2.0.0-alpha.1",
+  "version": "0.1.0",
   "repository": "wp-fetch/wp-fetch",
   "description": "Simple fetch http client transport",
   "author": "Andrew McLagan <andrew.mclagan@gmail.com>",

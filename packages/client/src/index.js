@@ -47,7 +47,7 @@ export default class Client {
     endpoint: '',
     namespace: 'wp/v2',
     config: {
-      referrer: 'wp-fetch',
+      referrer: 'wp-headless',
       headers: {
         'Content-Type': 'application/json'
       }

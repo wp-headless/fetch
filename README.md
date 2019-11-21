@@ -1,31 +1,31 @@
 <p align="center">
-  <img src="https://beam-wordpress-legacy.s3.ap-southeast-2.amazonaws.com/fetch-k9.png" width="200" alt="wp-fetch">
+  <img src="https://beam-wordpress-legacy.s3.ap-southeast-2.amazonaws.com/fetch-k9.png" width="200" alt="wp-headless">
   <br />  <br />
-  <a href="https://cloud.drone.io/wp-fetch/wp-fetch"><img src="https://cloud.drone.io/api/badges/wp-fetch/wp-fetch/status.svg" alt="drone"></a>
-  <a href="https://codecov.io/gh/wp-fetch/wp-fetch/branch/master"><img src="https://img.shields.io/codecov/c/github/wp-fetch/wp-fetch/master.svg" alt="Coverage Status"></a>  
-  <img src="https://img.shields.io/npm/v/@wp-fetch/client" alt="npm">
-  <img src="https://img.shields.io/bundlephobia/minzip/@wp-fetch/client" alt="Bundle size">
+  <a href="https://cloud.drone.io/wp-headless/fetch"><img src="https://cloud.drone.io/api/badges/wp-headless/fetch/status.svg" alt="drone"></a>
+  <a href="https://codecov.io/gh/wp-headless/fetch/branch/master"><img src="https://img.shields.io/codecov/c/github/wp-headless/fetch/master.svg" alt="Coverage Status"></a>  
+  <img src="https://img.shields.io/npm/v/@wp-headless/client" alt="npm">
+  <img src="https://img.shields.io/bundlephobia/minzip/@wp-headless/client" alt="Bundle size">
 </p>
 
 
-# WP-Fetch
+# Fetch
 
-Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
+A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
 ## Installation
 
-The architecture of WP-Fetch allows you to specify your own transport layer such as fetch or axios. ([read more](#transport-layers))
+The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. ([read more](#transport-layers))
 
 Yarn
 
 ```bash
-yarn add @wp-fetch/client @wp-fetch/transport-fetch
+yarn add @wp-headless/client @wp-headless/transport-fetch
 ```
 
 NPM
 
 ```bash
-npm install @wp-fetch/client @wp-fetch/transport-fetch
+npm install @wp-headless/client @wp-headless/transport-fetch
 ```
 
 ## Usage
@@ -33,8 +33,8 @@ npm install @wp-fetch/client @wp-fetch/transport-fetch
 Creating a client instance bound to the endpoint of your Wordpress install:
 
 ```javascript
-import Client from '@wp-fetch/client';
-import FetchTransport from '@wp-fetch/transport-fetch';
+import Client from '@wp-headless/client';
+import FetchTransport from '@wp-headless/transport-fetch';
 
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json',
@@ -45,8 +45,8 @@ const client = new Client({
 You may also use another transport layer such as axios:
 
 ```javascript
-import Client from '@wp-fetch/client';
-import AxiosTransport from '@wp-fetch/transport-axios';
+import Client from '@wp-headless/client';
+import AxiosTransport from '@wp-headless/transport-axios';
 
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json',
@@ -143,11 +143,11 @@ Its also possible to set global params that will be sent with each request:
 
 ```javascript
 // Sets single param key/value
-client.param('source', 'wp-fetch');
+client.param('source', 'wp-headless');
 
 // Merges object with current global param values
 client.param({
-  source: 'wp-fetch',
+  source: 'wp-headless',
   perPage: 15,
   orderby: 'title'
 });
@@ -157,7 +157,7 @@ To retrieve global params:
 
 ```javascript
 // Single value
-client.param('source'); // wp-fetch
+client.param('source'); // wp-headless
 
 // All values
 client.params;
@@ -201,7 +201,7 @@ client.media().file(file, 'Puppy Dog').create({
 
 ## Transport Layers
 
-The architecture of WP-Fetch allows you to specify your own transport layer such as fetch or axios. This allows devs to use a library that they are familiar with, and perhaps are already using in their app, saving bundle size. 
+The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. This allows devs to use a library that they are familiar with, and perhaps are already using in their app, saving bundle size. 
 
 ### Fetch
 
@@ -210,13 +210,13 @@ The fetch transport layer uses the [Fetch API Standard](https://developer.mozill
 To support older browsers you will have to implement a polyfill such as [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) or (isomorphic-unfetch)[https://github.com/developit/unfetch/tree/master/packages/isomorphic-unfetch]:
 
 ```bash
-yarn add @wp-fetch/client @wp-fetch/transport-fetch isomorphic-unfetch
+yarn add @wp-headless/client @wp-headless/transport-fetch isomorphic-unfetch
 ```
 
 ```javascript
 import 'isomorphic-unfetch';
-import Client from '@wp-fetch/client';
-import FetchTransport from '@wp-fetch/transport-fetch';
+import Client from '@wp-headless/client';
+import FetchTransport from '@wp-headless/transport-fetch';
 
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json',
@@ -229,8 +229,8 @@ const client = new Client({
 Axios is a popular HTTP request package that is usable in Node and the browser, no polyfill is needed. Although it does have a larger bundle size:
 
 ```javascript
-import Client from '@wp-fetch/client';
-import AxiosTransport from '@wp-fetch/transport-axios';
+import Client from '@wp-headless/client';
+import AxiosTransport from '@wp-headless/transport-axios';
 
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json',

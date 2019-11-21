@@ -205,7 +205,7 @@ The architecture of `wp-fetch` allows for
 
 ## Thanks 
 
-<img src="beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo2.png" width="120" alt="BrowserStack Logo">
+<img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo2.png" width="120" alt="BrowserStack Logo">
 
 ![alt text](https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo%402x.png "BrowserStack Logo")
 

@@ -5,15 +5,11 @@
   <a href="https://codecov.io/gh/wp-fetch/wp-fetch/branch/master"><img src="https://img.shields.io/codecov/c/github/wp-fetch/wp-fetch/master.svg" alt="Coverage Status"></a>  
   <img src="https://img.shields.io/npm/v/@wp-fetch/client" alt="npm">
   <img src="https://img.shields.io/bundlephobia/minzip/@wp-fetch/client" alt="Bundle size">
+  <br />
 </p>
 
 
 # WP-Fetch
-
-[![Build Status](https://cloud.drone.io/api/badges/wp-fetch/wp-fetch/status.svg)](https://cloud.drone.io/wp-fetch/wp-fetch)
-[![Coverage Status](https://img.shields.io/codecov/c/github/wp-fetch/wp-fetch/master.svg)](https://codecov.io/gh/wp-fetch/wp-fetch/branch/master)
-![npm (scoped)](https://img.shields.io/npm/v/@wp-fetch/client)
-![npm bundle size (scoped version)](https://img.shields.io/bundlephobia/minzip/@wp-fetch/client)
 
 A javascript client for the Wordpress API that works both in the browser and in Node. The goals of this project are: Tiny footprint, > 95% code coverage, browser tested down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 

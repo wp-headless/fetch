@@ -42,12 +42,12 @@ steps:
     depends_on:
       - build
 
-  - name: browsers
-    image: node:13-buster
-    commands:
-      - yarn test:browsers
-    depends_on:
-      - build
+  # - name: browsers
+  #   image: node:13-buster
+  #   commands:
+  #     - yarn test:browsers
+  #   depends_on:
+  #     - build
 
   - name: coverage-build
     image: node:alpine
@@ -58,7 +58,7 @@ steps:
       - node-11
       - node-12
       - node-13
-      - browsers
+      # - browsers
 
   - name: coverage-report
     image: plugins/codecov

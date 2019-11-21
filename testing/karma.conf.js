@@ -26,8 +26,8 @@ module.exports = config => {
     colors: true,
     logLevel: config.LOG_INFO,
     browserStack: {
-      username: 'andrewmclagan4',
-      accessKey: 'pacABfsVozdxaFq57Pv9'
+      username: process.env.BROWSERSTACK_USERNAME,
+      accessKey: process.env.BROWSERSTACK_KEY
     },
     customLaunchers,
     browsers: Object.keys(customLaunchers),

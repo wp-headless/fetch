@@ -1,8 +1,8 @@
 {
-  "name": "@yllet/transport-axios",
+  "name": "@wp-fetch/transport-axios",
   "private": false,
   "version": "2.0.0-alpha.1",
-  "repository": "ylletjs/yllet",
+  "repository": "wp-fetch/wp-fetch",
   "description": "yllet axios transport layer",
   "license": "MIT",
   "author": "Andrew McLagan <andrew.mclagan@gmail.com>",
@@ -19,7 +19,7 @@
     "lib/"
   ],
   "bugs": {
-    "url": "https://github.com/ylletjs/yllet/issues"
+    "url": "https://github.com/wp-fetch/wp-fetch/issues"
   },
   "scripts": {
     "prebuild": "rimraf lib",

@@ -2,19 +2,19 @@ This is a simple HTTP transport layer following the [fetch](https://developer.mo
 
 # Installation
 
-`yarn add @yllet/core @yllet/transport-fetch unfetch`
+`yarn add @wp-fetch/core @wp-fetch/transport-fetch unfetch`
 
 OR
 
-`npm install @yllet/core @yllet/transport-fetch unfetch`
+`npm install @wp-fetch/core @wp-fetch/transport-fetch unfetch`
 
 # Usage
 
 **With unfetch polyfill**
 ```javascript
 import 'unfetch/polyfill'
-import Client from '@yllet/core';
-import FetchTransport from '@yllet/transport-fetch';
+import Client from '@wp-fetch/core';
+import FetchTransport from '@wp-fetch/transport-fetch';
 
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json/',
@@ -24,8 +24,8 @@ const client = new Client({
 
 **Without polyfill**
 ```javascript
-import Client from '@yllet/core';
-import FetchTransport from '@yllet/transport-fetch';
+import Client from '@wp-fetch/core';
+import FetchTransport from '@wp-fetch/transport-fetch';
 
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json/',
@@ -35,4 +35,4 @@ const client = new Client({
 
 # yllet
 
-Please refer to the core [documentation](https://github.com/ylletjs/yllet) for details on how to use the `yllet` client.
+Please refer to the core [documentation](https://github.com/wp-fetch/wp-fetch) for details on how to use the `yllet` client.

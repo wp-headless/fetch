@@ -1,10 +1,10 @@
 {
-  "name": "@yllet/client",
+  "name": "@wp-fetch/client",
   "private": false,
   "version": "2.0.0-alpha.2",
-  "repository": "ylletjs/yllet",
+  "repository": "wp-fetch/wp-fetch",
   "description": "JavaScript client for the WordPress REST API",
-  "author": "Fredrik Forsmo <fredrik.forsmo@gmail.com>",
+  "author": "Andrew McLagan <andrewmclagan@gmail.com>",
   "keywords": [
     "wordpress",
     "api",
@@ -17,7 +17,7 @@
     "lib/"
   ],
   "bugs": {
-    "url": "https://github.com/ylletjs/yllet/issues"
+    "url": "https://github.com/wp-fetch/wp-fetch/issues"
   },
   "scripts": {
     "prebuild": "rimraf lib",

@@ -1,5 +1,5 @@
 {
-  "name": "yllet",
+  "name": "wp-fetch",
   "private": true,
   "workspaces": [
     "packages/*"

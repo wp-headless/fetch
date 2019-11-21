@@ -205,8 +205,6 @@ The architecture of `wp-fetch` allows for
 
 ## Thanks 
 
-<img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo2.png" width="120" alt="BrowserStack Logo">
-
-![alt text](https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo%402x.png "BrowserStack Logo")
+<a href="https://browserstack.com"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo2.png" width="150" alt="BrowserStack Logo"></a>
 
 Thanks to [BrowserStack](https://browserstack.com) for lending us their amazing infrastructure to give us automated browser coverage

@@ -201,7 +201,46 @@ client.media().file(file, 'Puppy Dog').create({
 
 ## Transport Layers
 
-The architecture of `wp-fetch` allows for
+The architecture of WP-Fetch allows you to specify your own transport layer such as fetch or axios. This allows devs to use a library that they are familiar with, and perhaps are already using in their app, saving bundle size. 
+
+### Fetch
+
+The fetch transport layer uses the [Fetch API Standard](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to make requests. This is supported in all modern browsers and newer versions of Node. This is what our team uses.
+
+To support older browsers you will have to implement a polyfill such as [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) or (isomorphic-unfetch)[https://github.com/developit/unfetch/tree/master/packages/isomorphic-unfetch]:
+
+```bash
+yarn add @wp-fetch/client @wp-fetch/transport-fetch isomorphic-unfetch
+```
+
+```javascript
+import 'isomorphic-unfetch';
+import Client from '@wp-fetch/client';
+import FetchTransport from '@wp-fetch/transport-fetch';
+
+const client = new Client({
+  endpoint: 'https://demo.wp-api.org/wp-json',
+  transport: new FetchTransport()
+});
+```
+
+### Axios
+
+Axios is a popular HTTP request package that is usable in Node and the browser, no polyfill is needed. Although it does have a larger bundle size:
+
+```javascript
+import Client from '@wp-fetch/client';
+import AxiosTransport from '@wp-fetch/transport-axios';
+
+const client = new Client({
+  endpoint: 'https://demo.wp-api.org/wp-json',
+  transport: new AxiosTransport()
+});
+```
+
+### Others
+
+We endevour to release other transport layers for [superagent](https://github.com/visionmedia/superagent) and [ky](https://github.com/sindresorhus/ky) in the future. We would love community contributions!
 
 ## Thanks 
 

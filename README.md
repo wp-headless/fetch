@@ -1,11 +1,10 @@
 <p align="center">
   <img src="https://beam-wordpress-legacy.s3.ap-southeast-2.amazonaws.com/fetch-k9.png" width="200" alt="wp-fetch">
-  <br>
+  <br />  <br />
   <a href="https://cloud.drone.io/wp-fetch/wp-fetch"><img src="https://cloud.drone.io/api/badges/wp-fetch/wp-fetch/status.svg" alt="drone"></a>
   <a href="https://codecov.io/gh/wp-fetch/wp-fetch/branch/master"><img src="https://img.shields.io/codecov/c/github/wp-fetch/wp-fetch/master.svg" alt="Coverage Status"></a>  
   <img src="https://img.shields.io/npm/v/@wp-fetch/client" alt="npm">
   <img src="https://img.shields.io/bundlephobia/minzip/@wp-fetch/client" alt="Bundle size">
-  <br />
 </p>
 
 

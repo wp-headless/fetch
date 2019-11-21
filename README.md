@@ -1,3 +1,10 @@
+<p align="center">
+  <img src="https://beam-wordpress-legacy.s3.ap-southeast-2.amazonaws.com/fetch-k9.png" width="300" height="300" alt="unfetch">
+  <br>
+  <a href="https://cloud.drone.io/wp-fetch/wp-fetch"><img src="https://cloud.drone.io/api/badges/wp-fetch/wp-fetch/status.svg" alt="drone"></a>
+</p>
+
+
 # WP-Fetch
 
 [![Build Status](https://cloud.drone.io/api/badges/wp-fetch/wp-fetch/status.svg)](https://cloud.drone.io/wp-fetch/wp-fetch)
@@ -9,7 +16,7 @@ A javascript client for the Wordpress API that works both in the browser and in 
 
 ## Installation
 
-The architecture of WP-Fetch allows you to specify your own transport layer such as fetch or axios.
+The architecture of WP-Fetch allows you to specify your own transport layer such as fetch or axios. ([read more](#transport-layers))
 
 Yarn
 
@@ -193,3 +200,7 @@ client.media().file(file, 'Puppy Dog').create({
   title: 'Puppy dog with a bone'
 });
 ```
+
+## Transport Layers
+
+The architecture of `wp-fetch` allows for

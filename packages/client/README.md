@@ -1,3 +1,3 @@
-# yllet
+# Client
 
 Please refer to its documentation [here](https://github.com/wp-fetch/wp-fetch).

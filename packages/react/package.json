@@ -1,7 +1,7 @@
 {
   "name": "@wp-fetch/react",
   "private": false,
-  "version": "2.0.0-alpha.2",
+  "version": "0.1.0",
   "repository": "wp-fetch/wp-fetch",
   "description": "React bindings for Yllet",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",

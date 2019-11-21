@@ -8,6 +8,9 @@ const client = new Client({
 });
 
 describe('Axios Integration Suite', () => {
+
+  this.timeout(5000);
+
   it('can fetch pages', () => {
     return client
       .pages()

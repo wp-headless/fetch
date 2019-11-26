@@ -8,7 +8,7 @@
 </p>
 
 
-# Fetch
+# Fetch (alpha)
 
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 

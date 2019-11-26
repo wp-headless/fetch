@@ -260,6 +260,6 @@ We endevour to release other transport layers for [superagent](https://github.co
 
 Thanks to [BrowserStack](https://browserstack.com) for lending us their amazing infrastructure to give us automated browser coverage
 
-<a href="https://drone.io"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/drone.png" width="150" alt="BrowserStack Logo"></a>
+<a href="https://drone.io"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/drone-2.png" width="150" alt="BrowserStack Logo"></a>
 
 Thanks to [Drone](https://drone.io/) an incredible pure docker CI/CD platform built on golang for building our stack! Hoestly use Drone nothing compares...

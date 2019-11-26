@@ -262,4 +262,4 @@ Thanks to [BrowserStack](https://browserstack.com) for lending us their amazing 
 
 <a href="https://drone.io"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/drone-2.png" width="150" alt="BrowserStack Logo"></a>
 
-Thanks to [Drone](https://drone.io/) an incredible pure docker CI/CD platform built on golang for building our stack! Hoestly use Drone nothing compares...
+Thanks to [Drone](https://drone.io/) an incredible pure docker CI/CD platform built on golang for building our stack! 

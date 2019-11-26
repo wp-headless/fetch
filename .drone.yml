@@ -5,7 +5,7 @@ steps:
   - name: install
     image: node:alpine
     commands:
-      - yarn install
+      - yarn install --audit --ignore-scripts
 
   - name: build
     image: node:alpine

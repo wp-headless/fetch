@@ -1,9 +1,9 @@
 {
-  "name": "@wp-fetch/transport-fetch",
+  "name": "@wp-headless/transport-fetch",
   "private": false,
   "version": "0.1.0",
-  "repository": "wp-fetch/wp-fetch",
-  "description": "Simple fetch http client transport",
+  "repository": "https://github.com/wp-headless/fetch",
+  "description": "wp-headless/fetch window.fetch http transport",
   "author": "Andrew McLagan <andrew.mclagan@gmail.com>",
   "keywords": [
     "wordpress",
@@ -18,14 +18,13 @@
     "lib/"
   ],
   "bugs": {
-    "url": "https://github.com/wp-fetch/wp-fetch/issues"
+    "url": "https://github.com/wp-headless/fetch/issues"
   },
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
-    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
-    "preversion": "yarn build"
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm"
   },
   "dependencies": {
     "base-64": "^0.1.0",

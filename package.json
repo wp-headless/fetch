@@ -1,5 +1,5 @@
 {
-  "name": "wp-fetch",
+  "name": "@wp-headless/fetch",
   "private": true,
   "workspaces": [
     "packages/*"
@@ -29,7 +29,6 @@
     "karma-mocha-reporter": "^2.2.5",
     "karma-sourcemap-loader": "^0.3.7",
     "karma-webpack": "^4.0.2",
-    "lerna": "^3.18.4",
     "mocha": "^6.2.2",
     "prettier": "^1.19.1",
     "pretty-quick": "^2.0.1",
@@ -42,20 +41,19 @@
     "webpack": "^4.41.2"
   },
   "scripts": {
-    "bootstrap": "lerna bootstrap --use-workspaces",
-    "build": "lerna run build",
-    "start": "lerna run start",
+    "build": "yarn workspaces run build",
+    "start": "yarn workspaces run start",
+    "publish": "yarn workspaces run publish",
+    "prepublish": "yarn test",
     "test": "yarn build && yarn test:coverage && yarn test:integration && yarn test:browsers",
     "test:unit": "jest --config testing/jest.config.js packages/**",
     "test:integration": "jest --config testing/jest.config.js testing/integration",
     "test:coverage": "yarn test:unit --coverage",
-    "test:browsers": "NODE_ENV=test karma start testing/karma.conf.js",
-    "postinstall": "lerna bootstrap"
+    "test:browsers": "NODE_ENV=test karma start testing/karma.conf.js"
   },
   "husky": {
     "hooks": {
       "pre-commit": "pretty-quick --staged"
     }
-  },
-  "version": "2.0.0-alpha.1"
+  }
 }

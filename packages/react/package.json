@@ -1,9 +1,9 @@
 {
-  "name": "@wp-fetch/react",
+  "name": "@wp-headless/react",
   "private": false,
   "version": "0.1.0",
-  "repository": "wp-fetch/wp-fetch",
-  "description": "React bindings for Yllet",
+  "repository": "https://github.com/wp-headless/fetch",
+  "description": "React bindings for wp-headless/fetch",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",
   "keywords": [
     "wordpress",
@@ -18,14 +18,13 @@
     "lib/"
   ],
   "bugs": {
-    "url": "https://github.com/wp-fetch/wp-fetch/issues"
+    "url": "https://github.com/wp-headless/fetch/issues"
   },
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
-    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
-    "preversion": "yarn build"
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm"
   },
   "dependencies": {
     "axios": "^0.18.0",

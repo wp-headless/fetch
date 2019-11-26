@@ -12,6 +12,18 @@
 
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
+## Why?
+
+There are great alternatives such as [wpapi](https://github.com/WP-API/node-wpapi) and [yllet](https://github.com/ylletjs/yllet) although both of these projects have issues:
+
+* Long unresolved [browser issues](https://github.com/WP-API/node-wpapi/issues/438)
+* Bloated [packages size](https://bundlephobia.com/result?p=wpapi@0.12.1)
+* No [tree-shakable](https://webpack.js.org/guides/tree-shaking/) ESM or CJS build available
+* Opinionated API that attempts to do more then is needed.
+* Lack of automated browser testing and coverage
+
+We intend to build support lean and well tested packages that fit into the modern ES6 javascript ecosystem.
+
 ## Installation
 
 The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. ([read more](#transport-layers))

@@ -254,6 +254,10 @@ const client = new Client({
 
 We endevour to release other transport layers for [superagent](https://github.com/visionmedia/superagent) and [ky](https://github.com/sindresorhus/ky) in the future. We would love community contributions!
 
+## Examples
+
+Examples of usage in a real world application can be found in the `examples` folder.
+
 ## Thanks 
 
 <a href="https://browserstack.com"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo2.png" width="150" alt="BrowserStack Logo"></a>

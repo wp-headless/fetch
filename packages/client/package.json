@@ -22,8 +22,8 @@
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
-    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm"
+    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --root-mode upward src -d lib/cjs",
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --root-mode upward src -d lib/esm"
   },
   "dependencies": {
     "deep-extend": "^0.6.0",

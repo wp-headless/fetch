@@ -23,7 +23,8 @@ const RESOURCES = [
   'tags',
   'taxonomies',
   'types',
-  'users'
+  'users',
+  'search'
 ];
 
 export default class Client {

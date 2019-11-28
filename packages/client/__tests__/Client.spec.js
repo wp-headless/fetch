@@ -91,7 +91,8 @@ describe('Client', () => {
       'tags',
       'taxonomies',
       'types',
-      'users'
+      'users',
+      'search'
     ].forEach(method => {
       client[method]();
       expect(client.path).toBe(method);

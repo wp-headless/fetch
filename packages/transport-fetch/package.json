@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/transport-fetch",
   "private": false,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "wp-headless/fetch window.fetch http transport",
   "author": "Andrew McLagan <andrew.mclagan@gmail.com>",
@@ -34,6 +34,6 @@
   },
   "license": "MIT",
   "devDependencies": {
-    "jest-fetch-mock": "^2.1.2"
+    "fetch-mock": "^8.0.0"
   }
 }

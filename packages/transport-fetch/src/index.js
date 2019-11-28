@@ -1,5 +1,5 @@
 import base64 from 'base-64';
-import queryString from 'querystringify';
+import queryString from 'query-string';
 import FormData from 'isomorphic-form-data';
 import HTTPError from './HTTPError';
 
@@ -25,7 +25,9 @@ export default class FetchTransport {
             'Unable to encode FormData for GET, DELETE requests'
           );
         }
-        url = `${url}?${queryString.stringify(data)}`;
+        url = `${url}?${queryString.stringify(data, {
+          arrayFormat: 'bracket'
+        })}`;
       }
     }
 

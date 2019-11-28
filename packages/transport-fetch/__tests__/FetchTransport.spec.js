@@ -105,13 +105,13 @@ describe('merge config', () => {
 });
 
 describe('with data', () => {
-  const data = { foo: 'bar' };
+  const data = { foo: 'bar', puppies: [21,33,150] };
 
   verbs.forEach(verb => {
     it(`${verb} sends data`, () => {
       transport.request(verb, 'https://wp.com/wp-json', data);
       if (['GET', 'DELETE'].includes(verb)) {
-        expect(fetch.mock.calls[0][0]).toBe('https://wp.com/wp-json?foo=bar');
+        expect(fetch.mock.calls[0][0]).toBe('https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150');
         expect(fetch.mock.calls[0][1].body).toBe(undefined);
       } else {
         expect(fetch.mock.calls[0][1].body).toEqual(JSON.stringify(data));

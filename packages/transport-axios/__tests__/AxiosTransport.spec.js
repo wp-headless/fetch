@@ -120,7 +120,7 @@ describe('merge config', () => {
 });
 
 describe('with data', () => {
-  const data = { foo: 'bar' };
+  const data = { foo: 'bar', puppies: [21,33,150] };
 
   verbs.forEach(verb => {
     it(`${verb.toUpperCase()} sends data`, () => {

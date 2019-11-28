@@ -7,8 +7,9 @@
   <img src="https://img.shields.io/bundlephobia/minzip/@wp-headless/client" alt="Bundle size">
 </p>
 
+> (Currently in alpha release - use in production at your own risk)
 
-# Fetch (alpha)
+# Fetch
 
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
@@ -16,11 +17,11 @@ A Wordpress API client that works both in the browser and in Node. Tiny footprin
 
 There are great alternatives such as [wpapi](https://github.com/WP-API/node-wpapi) and [yllet](https://github.com/ylletjs/yllet) although both of these projects have issues:
 
-* Long unresolved [browser issues](https://github.com/WP-API/node-wpapi/issues/438)
-* Bloated [packages size](https://bundlephobia.com/result?p=wpapi@0.12.1)
-* No [tree-shakable](https://webpack.js.org/guides/tree-shaking/) ESM or CJS build available
-* Opinionated API that attempts to do more then is needed.
-* Lack of automated browser testing and coverage
+- Long unresolved [browser issues](https://github.com/WP-API/node-wpapi/issues/438)
+- Bloated [packages size](https://bundlephobia.com/result?p=wpapi@0.12.1)
+- No [tree-shakable](https://webpack.js.org/guides/tree-shaking/) ESM or CJS build available
+- Opinionated API that attempts to do more then is needed.
+- Lack of automated browser testing and coverage
 
 We intend to build support lean and well tested packages that fit into the modern ES6 javascript ecosystem.
 
@@ -75,26 +76,29 @@ const posts = await client.posts().get();
 Or with promises:
 
 ```javascript
-client.posts().get().then(posts => {
-  console.log(posts);
-});
+client
+  .posts()
+  .get()
+  .then(posts => {
+    console.log(posts);
+  });
 ```
 
 ### Resources
 
 Client instances provide the following API resource methods:
 
-* `client.categories()`
-* `client.comments()`
-* `client.media()`
-* `client.statuses()`
-* `client.posts()`
-* `client.pages()`
-* `client.settings()`
-* `client.tags()`
-* `client.taxonomies()`
-* `client.types()`
-* `client.users()`
+- `client.categories()`
+- `client.comments()`
+- `client.media()`
+- `client.statuses()`
+- `client.posts()`
+- `client.pages()`
+- `client.settings()`
+- `client.tags()`
+- `client.taxonomies()`
+- `client.types()`
+- `client.users()`
 
 These resource methods are simply syntax sugar for setting the path and namespace to an API resource. Therefore the following are equivalent:
 
@@ -136,8 +140,8 @@ client.delete(); // Http DELETE
 You can pass request parameters as an object to any of the above methods:
 
 ```javascript
-const post = client.posts().create({ 
-  title: 'Hello World!', 
+const post = client.posts().create({
+  title: 'Hello World!',
   content: 'Lorem ipsum dolor sit amet...',
   excerpt: 'Etiam at feugiat neque...'
 });
@@ -177,14 +181,17 @@ client.params;
 
 ### Embed data
 
-WordPress API supports embedding of resources and instead of having to provide _embed=true as a param on every request you can simpley use embed() before any request methods.
+WordPress API supports embedding of resources and instead of having to provide \_embed=true as a param on every request you can simpley use embed() before any request methods.
 
 More about WordPress API embedding can you read [here](https://developer.wordpress.org/rest-api/using-the-rest-api/linking-and-embedding/#embedding).
 
 ```javascript
-const posts = await client.posts().embed().get({
-  slug: 'hello-world'
-});
+const posts = await client
+  .posts()
+  .embed()
+  .get({
+    slug: 'hello-world'
+  });
 ```
 
 ### File uploading
@@ -196,9 +203,12 @@ In the browser:
 ```javascript
 const file = document.getElementById('upload-input').files[0];
 
-const upload = await client.media().file(file, 'Puppy Dog').create({
-  title: 'Puppy dog with a bone'
-});
+const upload = await client
+  .media()
+  .file(file, 'Puppy Dog')
+  .create({
+    title: 'Puppy dog with a bone'
+  });
 ```
 
 In Node:
@@ -206,14 +216,17 @@ In Node:
 ```javascript
 const file = fs.createReadStream('test.jpg');
 
-client.media().file(file, 'Puppy Dog').create({
-  title: 'Puppy dog with a bone'
-});
+client
+  .media()
+  .file(file, 'Puppy Dog')
+  .create({
+    title: 'Puppy dog with a bone'
+  });
 ```
 
 ## Transport Layers
 
-The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. This allows devs to use a library that they are familiar with, and perhaps are already using in their app, saving bundle size. 
+The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. This allows devs to use a library that they are familiar with, and perhaps are already using in their app, saving bundle size.
 
 ### Fetch
 
@@ -258,7 +271,7 @@ We endevour to release other transport layers for [superagent](https://github.co
 
 Examples of usage in a real world application can be found in the `examples` folder.
 
-## Thanks 
+## Thanks
 
 <a href="https://browserstack.com"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/Browserstack-logo2.png" width="150" alt="BrowserStack Logo"></a>
 
@@ -266,4 +279,4 @@ Thanks to [BrowserStack](https://browserstack.com) for lending us their amazing 
 
 <a href="https://drone.io"><img src="https://beam-wordpress-legacy.s3-ap-southeast-2.amazonaws.com/drone-2.png" width="150" alt="BrowserStack Logo"></a>
 
-Thanks to [Drone](https://drone.io/) an incredible pure docker CI/CD platform built on golang for building our stack! 
+Thanks to [Drone](https://drone.io/) an incredible pure docker CI/CD platform built on golang for building our stack!

@@ -16,7 +16,7 @@ export default class FetchTransport {
       method: verb.toUpperCase()
     };
 
-    if (data) {
+    if (data && (Object.keys(data).length !== 0 || data instanceof FormData)) {
       if ('PUT PATCH POST'.indexOf(verb.toUpperCase()) > -1) {
         request.body = data instanceof FormData ? data : JSON.stringify(data);
       } else {
@@ -25,9 +25,10 @@ export default class FetchTransport {
             'Unable to encode FormData for GET, DELETE requests'
           );
         }
-        url = `${url}?${queryString.stringify(data, {
+        const qs = queryString.stringify(data, {
           arrayFormat: 'bracket'
-        })}`;
+        });
+        url = `${url}?${qs}`;
       }
     }
 
@@ -41,10 +42,11 @@ export default class FetchTransport {
       );
     }
 
-    return fetch(url, request)
-      .then(response => response.json())
-      .catch(error => {
-        throw new HTTPError(error);
-      });
+    return fetch(url, request).then(response => {
+      if (!response.ok) {
+        throw new HTTPError(response);
+      }
+      return response.json();
+    });
   }
 }

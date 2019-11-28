@@ -120,12 +120,12 @@ describe('merge config', () => {
 });
 
 describe('with data', () => {
-  const data = { foo: 'bar', puppies: [21,33,150] };
+  const data = { foo: 'bar', puppies: [21, 33, 150] };
 
   verbs.forEach(verb => {
     it(`${verb.toUpperCase()} sends data`, () => {
       axios.onAny().replyOnce(200);
-      if (['get', 'delete'].includes(verb)) {
+      if ('get delete'.indexOf(verb) > -1) {
         return transport
           .request(verb, 'https://wp.com/wp-json', data)
           .then(response => {
@@ -149,7 +149,7 @@ describe('with form data', () => {
   verbs.forEach(verb => {
     it(`${verb.toUpperCase()} sends form data`, () => {
       axios.onAny().replyOnce(200);
-      if (['get', 'delete'].includes(verb)) {
+      if ('get delete'.indexOf(verb) > -1) {
         try {
           return transport.request(verb, 'https://wp.com/wp-json', formData);
         } catch (error) {
@@ -173,7 +173,7 @@ describe('without data', () => {
   verbs.forEach(verb => {
     it(`${verb.toUpperCase()} sends data`, () => {
       axios.onAny().replyOnce(200);
-      if (['get', 'delete'].includes(verb)) {
+      if ('get delete'.indexOf(verb) > -1) {
         return transport
           .request(verb, 'https://wp.com/wp-json')
           .then(response => {

@@ -42,7 +42,9 @@ describe('Client.request', () => {
     client.request('post', {});
     expect(transport.post.mock.calls[3][0]).toBe(`${endpoint}/wp/v2`);
     client.request('post', 'products/variations/123');
-    expect(transport.post.mock.calls[4][0]).toBe(`${endpoint}/wp/v2/products/variations/123`);
+    expect(transport.post.mock.calls[4][0]).toBe(
+      `${endpoint}/wp/v2/products/variations/123`
+    );
   });
 
   it('merges global params', () => {
@@ -51,16 +53,6 @@ describe('Client.request', () => {
     expect(transport.post.mock.calls[0][1]).toEqual({
       ...client.params,
       ...params
-    });
-  });
-
-  it('converts request params to snake case', () => {
-    client.params = { weLikeCamels: '1', andClimbingHills: '2' };
-    client.request('post', { andGentleWavesLikeThis: '3' });
-    expect(transport.post.mock.calls[0][1]).toEqual({
-      weLikeCamels: '1',
-      andClimbingHills: '2',
-      and_gentle_waves_like_this: '3'
     });
   });
 

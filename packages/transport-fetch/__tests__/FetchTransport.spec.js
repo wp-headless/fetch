@@ -116,22 +116,19 @@ describe('merge config', () => {
 });
 
 describe('with data', () => {
-  const data = { foo: 'bar', puppies: [21, 33, 150] };
+  const data = { foo: 'bar', puppies: [21, 33, 150], bones: ['47'] };
 
   verbs.forEach(verb => {
     it(`${verb} sends data`, () => {
       if (['GET', 'DELETE'].includes(verb)) {
-        fetchMock.once(
-          'https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150',
-          {}
-        );
+        fetchMock.once('*', {});
         transport.request(verb, 'https://wp.com/wp-json', data);
         expect(fetchMock.calls()[0][0]).toBe(
-          'https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150'
+          'https://wp.com/wp-json?bones[]=47&foo=bar&puppies[]=21&puppies[]=33&puppies[]=150'
         );
         expect(fetchMock.calls()[0][1].body).toBe(undefined);
       } else {
-        fetchMock.once('https://wp.com/wp-json', {});
+        fetchMock.once('*', {});
         transport.request(verb, 'https://wp.com/wp-json', data);
         expect(fetchMock.calls()[0][1].body).toEqual(JSON.stringify(data));
       }

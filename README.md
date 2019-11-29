@@ -147,14 +147,6 @@ const post = client.posts().create({
 });
 ```
 
-You may write parameters as camel case or snake case:
-
-```javascript
-const post = client.posts().create({ perPage: 10 });
-
-const posts = client.posts().get({ per_page: 10 });
-```
-
 Its also possible to set global params that will be sent with each request:
 
 ```javascript
@@ -164,7 +156,7 @@ client.param('source', 'wp-headless');
 // Merges object with current global param values
 client.param({
   source: 'wp-headless',
-  perPage: 15,
+  per_page: 15,
   orderby: 'title'
 });
 ```

@@ -1,7 +1,7 @@
 import FormData from 'isomorphic-form-data';
 import urljoin from 'url-join';
 import merge from 'deep-extend';
-import { isObject, objectKeysToSnakeCase } from './util';
+import { isObject } from './util';
 
 // HTTP methods map.
 const METHODS = {
@@ -136,7 +136,7 @@ export default class Client {
    */
   _getParams(params) {
     let merged;
-    params = isObject(params) ? objectKeysToSnakeCase(params) : {};
+    params = isObject(params) ? params : {};
     merged = { ...this.params, ...params };
 
     if (this.formData instanceof FormData) {
@@ -289,6 +289,10 @@ export default class Client {
       params = path;
       path = '';
     }
-    return this.transport[verb](this._getUrl(path), this._getParams(params), this._getConfig());
+    return this.transport[verb](
+      this._getUrl(path),
+      this._getParams(params),
+      this._getConfig()
+    );
   }
 }

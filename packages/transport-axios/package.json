@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/transport-axios",
   "private": false,
-  "version": "0.2.1",
+  "version": "0.3.0",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "wp-headless/fetch axios transport layer",
   "license": "MIT",

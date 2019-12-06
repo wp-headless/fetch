@@ -36,6 +36,13 @@ export default class Client {
   transport = null;
 
   /**
+   * Initial endpoint.
+   *
+   * @var {string}
+   */
+  initialEndpoint = null;
+
+  /**
    * Client options.
    *
    * @var {object}
@@ -98,6 +105,8 @@ export default class Client {
 
     this.options = merge(this.options, options);
 
+    this.initialEndpoint = this.options.endpoint;
+
     // Init HTTP methods
     Object.keys(METHODS).forEach(method => {
       this[method] = (path, params) => {
@@ -124,6 +133,7 @@ export default class Client {
     const safePath = path ? path : '';
     const { endpoint, namespace } = this.options;
     const safeEndpoint = endpoint.replace(namespace, '');
+    this.endpoint(this.initialEndpoint); // restore endpoint
     return urljoin(safeEndpoint, namespace, this.path, String(safePath));
   }
 
@@ -227,6 +237,18 @@ export default class Client {
 
     this.config = { ...this.config, headers: { ...headers } }; // immutable
 
+    return this;
+  }
+
+  /**
+   * Modify endpoint that is used.
+   *
+   * @param  {string}  endpoint
+   *
+   * @return {Client}
+   */
+  endpoint(endpoint) {
+    this.options.endpoint = endpoint;
     return this;
   }
 

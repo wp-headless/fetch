@@ -56,6 +56,17 @@ describe('Client.request', () => {
     });
   });
 
+  it('resets endpoint after request', () => {
+    client.endpoint('http://foo.bar/wp-json').request('post', '/products');
+    client.request('post', '/products');
+    expect(transport.post.mock.calls[0][0]).toBe(
+      'http://foo.bar/wp-json/wp/v2/products'
+    );
+    expect(transport.post.mock.calls[1][0]).toBe(
+      'http://wordpress.test/wp-json/wp/v2/products'
+    );
+  });
+
   it('can send a file', () => {
     const formData = new FormData();
     client.formData = formData;

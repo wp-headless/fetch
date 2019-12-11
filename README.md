@@ -21,7 +21,7 @@ A Wordpress API client that works both in the browser and in Node. Tiny footprin
 - - [Request parameters](#Request parameters)
 - - [Embed data](#Embed data)
 - - [File uploading](#File uploading)
-- - [Helper functions](#Helper functions)
+- - [Helper functions](#Syntactical sugar (helper functions))
 - [Transport layers](#Transport layers)
 - - [Fetch](#Fetch)
 - - [Others](#Others)

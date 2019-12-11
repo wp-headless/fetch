@@ -4,3 +4,4 @@ packages/*/lib/
 packages/*/node_modules/
 .jest-*
 browserstack.err
+.DS_Store

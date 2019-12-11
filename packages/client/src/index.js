@@ -258,6 +258,18 @@ export default class Client {
   }
 
   /**
+   * Fetch a single item by slug
+   *
+   * @param  {string} slug
+   *
+   * @return {Response}
+   */
+  async slug(slug) {
+    const response = await this.get({ per_page: 1, slug });
+    return response[0];
+  }
+
+  /**
    * Set/Get global param.
    *
    * @param  {string|object} key

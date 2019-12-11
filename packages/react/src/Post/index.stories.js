@@ -51,3 +51,13 @@ export const errorFallback = () => {
     </ClientProvider>
   );
 };
+
+export const fetchBySlug = () => {
+  return (
+    <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
+      <PostProvider slug="hello-world">
+        <WrappedContainer />
+      </PostProvider>
+    </ClientProvider>
+  );
+};

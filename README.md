@@ -13,19 +13,19 @@
 
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
-- [Why?](#Why?)
-- [Installation](#Installation)
-- [Usage](#Usage)
-  - [Resources](#Resources)
-  - [HTTP methods](#HTTP methods)
-  - [Request parameters](#Request parameters)
-  - [Embed data](#Embed data)
-  - [File uploading](#File uploading)
-  - [Helper functions](#Syntactical sugar (helper functions))
-- [Transport layers](#Transport layers)
-  - [Fetch](#Fetch)
-  - [Others](#Others)
-- [Examples](#Examples)
+- [Why?](#why?)
+- [Installation](#installation)
+- [Usage](#usage)
+  - [Resources](#resources)
+  - [HTTP methods](#http-methods)
+  - [Request parameters](#request-parameters)
+  - [Embed data](#embed-data)
+  - [File uploading](#file-uploading)
+  - [Helper functions](#syntactical-sugar-helper-functions)
+- [Transport layers](#transport-layers)
+  - [Fetch](#fetch)
+  - [Others](#others)
+- [Examples](#examples)
 
 ## Why?
 

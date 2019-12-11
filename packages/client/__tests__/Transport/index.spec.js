@@ -1,5 +1,4 @@
 import expect from 'expect';
-import base64 from 'base-64';
 import FormData from 'isomorphic-form-data';
 import fetchMock from 'fetch-mock';
 import Transport from '../../src/Transport';
@@ -69,27 +68,6 @@ describe('headers', () => {
       expect(fetchMock.calls()[0][1].headers).toEqual(
         new Headers(config.headers)
       );
-    });
-  });
-});
-
-describe('basic auth', () => {
-  const config = {
-    auth: {
-      username: 'foo',
-      password: 'bar'
-    }
-  };
-
-  const expected = new Headers({
-    Authorization: 'Basic ' + base64.encode('foo:bar')
-  });
-
-  verbs.forEach(verb => {
-    it(`${verb} can use basic auth`, () => {
-      fetchMock.once('https://wp.com/wp-json', {});
-      transport.request(verb, 'https://wp.com/wp-json', {}, config);
-      expect(fetchMock.calls()[0][1].headers).toEqual(expected);
     });
   });
 });

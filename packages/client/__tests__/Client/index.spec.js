@@ -20,10 +20,6 @@ describe('Client', () => {
   it('has default options', () => {
     const client = new Client();
     expect(client.options).toEqual({
-      auth: {
-        username: '',
-        password: ''
-      },
       endpoint: '',
       namespace: 'wp/v2',
       config: {
@@ -44,10 +40,6 @@ describe('Client', () => {
       }
     });
     expect(client.options).toEqual({
-      auth: {
-        username: '',
-        password: ''
-      },
       endpoint: 'https://wordpress.test/wp-json',
       namespace: 'wp/v2',
       config: {

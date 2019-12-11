@@ -4,7 +4,7 @@ import withClient from '../ClientProvider/withClient';
 import Context from './Context';
 import renderChildren from '../utils/renderChildren';
 
-const PostProvider = ({
+const FetchProvider = ({
   client,
   id,
   slug,
@@ -20,13 +20,8 @@ const PostProvider = ({
   client.namespace(namespace).resource(resource);
 
   const fetcher = slug ? client.slug : client.get;
-  console.log(client.slug);
-  console.log(client.get);
-  const { data, error, isValidating, revalidate } = useSWR(
-    key,
-    key => fetcher(key),
-    swr
-  );
+
+  const { data, error, isValidating, revalidate } = useSWR(key, fetcher, swr);
 
   const context = {
     post: data,
@@ -49,11 +44,11 @@ const PostProvider = ({
   );
 };
 
-PostProvider.defaultProps = {
+FetchProvider.defaultProps = {
   namespace: 'wp/v2',
   resource: 'posts',
   failed: <React.Fragment />,
   fallback: <React.Fragment />
 };
 
-export default withClient(PostProvider);
+export default withClient(FetchProvider);

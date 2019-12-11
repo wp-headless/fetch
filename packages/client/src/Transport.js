@@ -1,4 +1,3 @@
-import base64 from 'base-64';
 import queryString from 'query-string';
 import FormData from 'isomorphic-form-data';
 import HTTPError from './HTTPError';
@@ -33,14 +32,6 @@ export default class FetchTransport {
     }
 
     request.headers = new Headers(config.headers);
-
-    if (config && config.auth && config.auth.username && config.auth.password) {
-      request.headers.set(
-        'Authorization',
-        'Basic ' +
-          base64.encode(`${config.auth.username}:${config.auth.password}`)
-      );
-    }
 
     return fetch(url, request).then(response => {
       return response.json().then(data => {

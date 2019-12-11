@@ -49,10 +49,6 @@ export default class Client {
    * @var {object}
    */
   options = {
-    auth: {
-      username: '',
-      password: ''
-    },
     endpoint: '',
     namespace: 'wp/v2',
     config: {
@@ -260,14 +256,14 @@ export default class Client {
   /**
    * Fetch a single item by slug
    *
-   * @param  {string} slug
+   * @param  {string} postSlug
    *
    * @return {Response}
    */
-  slug(slug) {
+  slug = slug => {
     const params = { per_page: 1, slug };
     return this.get(params).then(response => response[0]);
-  }
+  };
 
   /**
    * Set/Get global param.

@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/client",
   "private": false,
-  "version": "0.4.4",
+  "version": "0.5.0",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "JavaScript client for the WordPress REST API",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",
@@ -26,7 +26,6 @@
     "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --root-mode upward src -d lib/esm"
   },
   "dependencies": {
-    "base-64": "^0.1.0",
     "deep-extend": "^0.6.0",
     "isomorphic-form-data": "^2.0.0",
     "query-string": "5",

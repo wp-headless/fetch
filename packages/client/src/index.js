@@ -1,6 +1,7 @@
 import FormData from 'isomorphic-form-data';
 import urljoin from 'url-join';
 import merge from 'deep-extend';
+import Transport from './Transport';
 import { isObject } from './util';
 
 // HTTP methods map.
@@ -94,14 +95,10 @@ export default class Client {
    * Client constructor.
    *
    * @param {object} options
+   * @param {Transport} transport
    */
-  constructor(options = {}) {
-    if (!options.transport) {
-      throw new TypeError('Transport is required option, none was set.');
-    } else {
-      this.transport = options.transport;
-      delete options.transport;
-    }
+  constructor(options = {}, transport) {
+    this.transport = !transport ? new Transport() : transport;
 
     this.options = merge(this.options, options);
 
@@ -166,22 +163,6 @@ export default class Client {
    */
   _getConfig() {
     return merge(this.options.config, this.config);
-  }
-
-  /**
-   * Discover the REST API from a URL.
-   *
-   * @param  {string} url
-   *
-   * @return {Promise}
-   */
-  discover(url) {
-    return this.transport.get(url, { rest_route: '/' }).then(response => {
-      if (isObject(response.routes)) {
-        return response.routes['/']._links.self;
-      }
-      throw new Error('Unable to find the REST API');
-    });
   }
 
   /**

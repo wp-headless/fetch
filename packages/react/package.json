@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/react",
   "private": false,
-  "version": "0.3.0",
+  "version": "0.4.0",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "React bindings for wp-headless/fetch",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",
@@ -24,20 +24,19 @@
     "prebuild": "rimraf lib",
     "build": "yarn build:cjs && yarn build:esm",
     "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
-    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm"
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
+    "storybook": "start-storybook"
   },
   "dependencies": {
-    "axios": "^0.18.0",
-    "invariant": "^2.2.4",
-    "prop-types": "^15.7.2",
-    "qs": "^6.7.0",
-    "react": "^16.8.6",
-    "url-join": "^4.0.0"
+    "react": "^16.0.0",
+    "swr": "^0.1.13"
   },
   "devDependencies": {
+    "@storybook/react": "^5.2.8",
+    "@wp-headless/client": "^0.3.0",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
-    "react-dom": "^16.8.6"
+    "react-dom": "^16.0.0"
   },
   "license": "MIT"
 }

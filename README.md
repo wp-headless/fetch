@@ -27,18 +27,16 @@ We intend to build support lean and well tested packages that fit into the moder
 
 ## Installation
 
-The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. ([read more](#transport-layers))
-
 Yarn
 
 ```bash
-yarn add @wp-headless/client @wp-headless/transport-fetch
+yarn add @wp-headless/client
 ```
 
 NPM
 
 ```bash
-npm install @wp-headless/client @wp-headless/transport-fetch
+npm install @wp-headless/client
 ```
 
 ## Usage
@@ -47,23 +45,9 @@ Creating a client instance bound to the endpoint of your Wordpress install:
 
 ```javascript
 import Client from '@wp-headless/client';
-import FetchTransport from '@wp-headless/transport-fetch';
 
 const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json',
-  transport: new FetchTransport()
-});
-```
-
-You may also use another transport layer such as axios:
-
-```javascript
-import Client from '@wp-headless/client';
-import AxiosTransport from '@wp-headless/transport-axios';
-
-const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json',
-  transport: new AxiosTransport()
+  endpoint: 'https://demo.wp-api.org/wp-json'
 });
 ```
 
@@ -222,42 +206,22 @@ The architecture of Fetch allows you to specify your own transport layer such as
 
 ### Fetch
 
-The fetch transport layer uses the [Fetch API Standard](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to make requests. This is supported in all modern browsers and newer versions of Node. This is what our team uses.
+The client uses the [Fetch API Standard](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API) to make requests. This is supported in all modern browsers and newer versions of Node.
 
 To support older browsers you will have to implement a polyfill such as [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch) or (isomorphic-unfetch)[https://github.com/developit/unfetch/tree/master/packages/isomorphic-unfetch]:
 
 ```bash
-yarn add @wp-headless/client @wp-headless/transport-fetch isomorphic-unfetch
+yarn add @wp-headless/client isomorphic-unfetch
 ```
 
 ```javascript
 import 'isomorphic-unfetch';
 import Client from '@wp-headless/client';
-import FetchTransport from '@wp-headless/transport-fetch';
 
 const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json',
-  transport: new FetchTransport()
+  endpoint: 'https://demo.wp-api.org/wp-json'
 });
 ```
-
-### Axios
-
-Axios is a popular HTTP request package that is usable in Node and the browser, no polyfill is needed. Although it does have a larger bundle size:
-
-```javascript
-import Client from '@wp-headless/client';
-import AxiosTransport from '@wp-headless/transport-axios';
-
-const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json',
-  transport: new AxiosTransport()
-});
-```
-
-### Others
-
-We endevour to release other transport layers for [superagent](https://github.com/visionmedia/superagent) and [ky](https://github.com/sindresorhus/ky) in the future. We would love community contributions!
 
 ## Examples
 

@@ -7,22 +7,29 @@ let context;
  *
  * - We do not test react as its DOM API is already heavily tested.
  * - Integration tests entire functionality within a browser on a live API
- * - https://wordpress.org/wp-json/wp/v2
  */
 
-// Client
-context = require.context('../packages/client/__tests__', true, /\.spec\.js$/);
-context.keys().forEach(context);
+/**
+ * @note Awaiting merge of IE / Edge bug in fetch-mock to browser test Transport
+ */
 
-// Transport Axios
 context = require.context(
-  '../packages/transport-axios/__tests__',
+  '../packages/client/__tests__/Client',
   true,
   /\.spec\.js$/
 );
 context.keys().forEach(context);
 
-// Transport Fetch
-// Awaiting https://github.com/wheresrhys/fetch-mock/issues/415
-// context = require.context('../packages/transport-fetch/__tests__', true, /\.spec\.js$/);
-// context.keys().forEach(context);
+context = require.context(
+  '../packages/client/__tests__/HTTPError',
+  true,
+  /\.spec\.js$/
+);
+context.keys().forEach(context);
+
+context = require.context(
+  '../packages/client/__tests__/utils',
+  true,
+  /\.spec\.js$/
+);
+context.keys().forEach(context);

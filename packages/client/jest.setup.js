@@ -1,1 +1,1 @@
-global.fetch = require('jest-fetch-mock');
+import 'isomorphic-fetch';

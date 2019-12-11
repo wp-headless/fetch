@@ -1,12 +1,12 @@
 import React from 'react';
 import useSWR from 'swr';
-import { Context } from './Context';
-import renderChildren from '../renderChildren';
+import Context from './Context';
+import renderChildren from '../utils/renderChildren';
 
 const PostProvider = ({ client, id, fallback, failed, children }) => {
   const { data, error } = useSWR(id, client.posts().get);
 
-  const context = { post: data, loading: !data, error };
+  const context = { post: data, error };
 
   let cmp = children;
 

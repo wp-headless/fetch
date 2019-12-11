@@ -8,7 +8,11 @@ const PostList = ({ posts }) => {
     <React.Fragment>
       <ul>
         {posts.map(post => (
-          <li key={post.slug}>{post.title.rendered}</li>
+          <li key={post.slug}>
+            <a href={post.link} target="_blank">
+              {post.title.rendered}
+            </a>
+          </li>
         ))}
       </ul>
     </React.Fragment>

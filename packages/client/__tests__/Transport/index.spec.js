@@ -188,34 +188,17 @@ describe('returns json', () => {
 });
 
 describe('http exceptions', () => {
-  const response = new Response('Bad Response', {
+  const response = {
     status: 503,
-    statusText: 'Invalid input data'
-  });
+    body: { foo: 'bar' }
+  };
 
   verbs.forEach(verb => {
     it(`${verb} throws http exceptions`, () => {
-      fetchMock.once('https://wp.com/wp-json', response);
+      fetchMock.once('*', response);
       return transport.request(verb, 'https://wp.com/wp-json').catch(error => {
         expect(error instanceof HTTPError).toBe(true);
-        expect(error.response).toEqual(response);
-      });
-    });
-  });
-});
-
-describe('non http exceptions', () => {
-  const response = new Response('Bad Response', {
-    status: 503,
-    statusText: 'Invalid input data'
-  });
-
-  verbs.forEach(verb => {
-    it(`${verb} throws http exceptions`, () => {
-      fetchMock.once('https://wp.com/wp-json', response);
-      return transport.request(verb, 'https://wp.com/wp-json').catch(error => {
-        expect(error instanceof HTTPError).toBe(true);
-        expect(error.response).toEqual(response);
+        expect(error.response).toEqual({ foo: 'bar' });
       });
     });
   });

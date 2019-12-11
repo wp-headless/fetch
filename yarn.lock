@@ -2000,16 +2000,6 @@
     "@babel/runtime" "^7.7.2"
     core-js "3"
 
-"@wp-headless/transport-fetch@^0.3.0":
-  version "0.3.0"
-  resolved "https://registry.yarnpkg.com/@wp-headless/transport-fetch/-/transport-fetch-0.3.0.tgz#509c9c274c9dbf216dfe0b403ea164022b512769"
-  integrity sha512-Y7J4SYfMEntv+iTff0DSYWCkWlU9Q2Q6wYI8m7oqVo3abbVkrfKGUBalVNY2G48UC424Eatybh/aVVr026+6Aw==
-  dependencies:
-    base-64 "^0.1.0"
-    isomorphic-form-data "^2.0.0"
-    query-string "5"
-    querystringify "^2.1.1"
-
 "@xtuc/ieee754@^1.2.0":
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/@xtuc/ieee754/-/ieee754-1.2.0.tgz#eef014a3145ae477a1cbc00cd1e552336dceb790"

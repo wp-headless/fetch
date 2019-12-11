@@ -42,12 +42,12 @@ export default class FetchTransport {
       );
     }
 
-    return fetch(url, request).then(response => {
+    return fetch(url, request).then(async response => {
+      const data = await response.json();
       if (!response.ok) {
-        // const error = await response.json();
-        throw new HTTPError(response);
+        throw new HTTPError(data);
       }
-      return response.json();
+      return data;
     });
   }
 }

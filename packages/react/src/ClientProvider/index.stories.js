@@ -1,8 +1,7 @@
 import React from 'react';
-import client from 'testing/client';
 import PostList from 'testing/components/PostList';
 import Nester from 'testing/components/Nester';
-import withClient from './Context';
+import withClient from './withClient';
 import ClientProvider from '.';
 
 export default { title: 'ClientProvider' };
@@ -29,7 +28,7 @@ class Container extends React.Component {
 
 export const clientProvider = () => {
   return (
-    <ClientProvider client={client}>
+    <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
       {({ client }) => <Container client={client} />}
     </ClientProvider>
   );
@@ -39,7 +38,7 @@ const WrappedContainer = withClient(Container);
 
 export const withClientHOC = () => {
   return (
-    <ClientProvider client={client}>
+    <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
       <Nester>
         <WrappedContainer />
       </Nester>

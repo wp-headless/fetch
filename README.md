@@ -13,6 +13,20 @@
 
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
+- [Why?](#Why?)
+- [Installation](#Installation)
+- [Usage](#Usage)
+  ** [Resources](#Resources)
+  ** [HTTP methods](#HTTP methods)
+  ** [Request parameters](#Request parameters)
+  ** [Embed data](#Embed data)
+  ** [File uploading](#File uploading)
+  ** [Helper functions](#Helper functions)
+- [Transport layers](#Transport layers)
+  ** [Fetch](#Fetch)
+  ** [Others](#Others)
+- [Examples](#Examples)
+
 ## Why?
 
 There are great alternatives such as [wpapi](https://github.com/WP-API/node-wpapi) and [yllet](https://github.com/ylletjs/yllet) although both of these projects have issues:
@@ -23,7 +37,7 @@ There are great alternatives such as [wpapi](https://github.com/WP-API/node-wpap
 - Opinionated API that attempts to do more then is needed.
 - Lack of automated browser testing and coverage
 
-We intend to build support lean and well tested packages that fit into the modern ES6 javascript ecosystem.
+We intend to build and support a lean and well tested packages that fit into the modern ES6 javascript ecosystem.
 
 ## Installation
 
@@ -51,26 +65,33 @@ const client = new Client({
 });
 ```
 
-Fetching posts using async await:
+Fetching posts:
 
 ```javascript
+// post with id 123
+const post = await client.posts().get(123);
+// post with slug 'hello-world'
+const post = await client.posts().slug('hello-world');
+// All posts
 const posts = await client.posts().get();
+// filtered posts
+const posts = await client.posts().get({
+  per_page: 10,
+  orderby: 'title',
+  search: 'Dog fetches bone'
+});
 ```
 
-Or with promises:
+Fetching pages is the same as above, simply change the resource endpoint as follows:
 
 ```javascript
-client
-  .posts()
-  .get()
-  .then(posts => {
-    console.log(posts);
-  });
+// page with id 456
+const page = await client.pages().get(456);
 ```
 
 ### Resources
 
-Client instances provide the following API resource methods:
+The client provides the following API resource methods:
 
 - `client.categories()`
 - `client.comments()`
@@ -87,14 +108,14 @@ Client instances provide the following API resource methods:
 These resource methods are simply syntax sugar for setting the path and namespace to an API resource. Therefore the following are equivalent:
 
 ```javascript
-const post = await client.posts().get(1);
+const posts = await client.posts().get(123);
 ```
 
 ```javascript
-const post = await client.get('posts/1');
+const post = await client.get('posts/123');
 ```
 
-Adding custom request methods is easy (example [WooCommerce REST API](https://woocommerce.github.io/woocommerce-rest-api-docs/)), the following would fetch the enpoint http://demo.wp-api.org/wp-json/wc/v2/products:
+Adding custom resource methods is easy (example [WooCommerce REST API](https://woocommerce.github.io/woocommerce-rest-api-docs/)), the following would fetch the enpoint http://demo.wp-api.org/wp-json/wc/v2/products:
 
 ```javascript
 client.products = () => client.namespace('wc/v2').resource('products');
@@ -105,10 +126,12 @@ const products = await client.products().get();
 Of course you could simply also do the following:
 
 ```javascript
-const dogBone = await client.namespace('wc/v2').get('products/123');
+const product = await client.namespace('wc/v2').get('products/123');
 ```
 
-### Methods
+As you can see building requests is as simple as setting the `namespace()`, `resource()` and the HTTP method; `get()`, `post()`, `put()`, `patch()` or `delete()`.
+
+### HTTP methods
 
 Client instances also provide access to HTTP methods to access API resources.
 
@@ -119,28 +142,54 @@ client.update(); // Http PATCH
 client.delete(); // Http DELETE
 ```
 
-### Params
+For example:
+
+```javascript
+// create a post
+const post = client.posts().create({
+  title: 'Dog fetches ball',
+  content: '<p>then he brings it back</p>'
+});
+// update the post
+const post = client.posts().update(post.id, {
+  excerpt: 'Its just what dogs do...'
+});
+// delete the post
+client.posts().delete(post.id);
+```
+
+### Request parameters
 
 You can pass request parameters as an object to any of the above methods:
 
 ```javascript
+// REQUEST URI https://demo.wp-api.org/wp-json/wp/v2/posts
+// REQUEST BODY { title: 'Hello doggy', content: 'fetch a bone' }
 const post = client.posts().create({
-  title: 'Hello World!',
-  content: 'Lorem ipsum dolor sit amet...',
-  excerpt: 'Etiam at feugiat neque...'
+  title: 'Hello doggy',
+  content: 'fetch a bone'
+});
+```
+
+Or with a get request
+
+```javascript
+// REQUEST URI https://demo.wp-api.org/wp-json/wp/v2/posts?per_page=10&status=draft
+const post = client.posts().get({
+  per_page: 10,
+  status: 'draft'
 });
 ```
 
 Its also possible to set global params that will be sent with each request:
 
 ```javascript
-// Sets single param key/value
-client.param('source', 'wp-headless');
+// Sets a single param key/value
+client.param('per_page', 20);
 
-// Merges object with current global param values
+// Merges an object with current global param values
 client.param({
-  source: 'wp-headless',
-  per_page: 15,
+  per_page: 20,
   orderby: 'title'
 });
 ```
@@ -157,7 +206,7 @@ client.params;
 
 ### Embed data
 
-WordPress API supports embedding of resources and instead of having to provide \_embed=true as a param on every request you can simpley use embed() before any request methods.
+WordPress API supports embedding of resources and instead of having to provide `?_embed=true` as a param on every request you can simpley use `embed()` before any request methods.
 
 More about WordPress API embedding can you read [here](https://developer.wordpress.org/rest-api/using-the-rest-api/linking-and-embedding/#embedding).
 
@@ -165,14 +214,20 @@ More about WordPress API embedding can you read [here](https://developer.wordpre
 const posts = await client
   .posts()
   .embed()
-  .get({
-    slug: 'hello-world'
-  });
+  .get();
+```
+
+Or globally for all requests:
+
+```javascript
+client.param('_embed', true);
+
+const posts = await client.posts().get(); // now embeded
 ```
 
 ### File uploading
 
-When Uploading a file you can use `client.file(file, [name])` to specify a file or a file buffer to attach to the request with a name (optional).
+When Uploading a file you can use `client.file(file, [name])` to specify a file (or a file buffer in Node) to attach to the request with a name (optional).
 
 In the browser:
 
@@ -200,7 +255,28 @@ client
   });
 ```
 
-## Transport Layers
+### Syntactical sugar (helper functions)
+
+> Sometimes its helpful to have expressive methods that wrap the underlying api, making code more readable and clean.
+
+`slug(string: slug)`
+
+Slug method is a shortcut to fetch a single post, custom post or page via its `post_name` (slug) attribute.
+
+```javascript
+const post = client.page().slug('sample-page');
+// ...equivalent to
+const post = client
+  .page()
+  .get({ slug: 'sample-page', per_page: 1 })
+  .then(posts => posts[0]);
+```
+
+`more`
+
+We endevour to add a minimal set of sugar to this library, keeping it small, lean and bloat free is imperative.
+
+## Transport layers
 
 The architecture of Fetch allows you to specify your own transport layer such as fetch or axios. This allows devs to use a library that they are familiar with, and perhaps are already using in their app, saving bundle size.
 
@@ -221,6 +297,20 @@ import Client from '@wp-headless/client';
 const client = new Client({
   endpoint: 'https://demo.wp-api.org/wp-json'
 });
+```
+
+### Others
+
+If you would like to use a different transport layer such as `axios` or `superagent` you only need to write an adapter that adheres to interface of the `Transport` class found in the client package. To use this layer pass your custom transport as the second argument to the `Client`:
+
+```javascript
+import 'isomorphic-unfetch';
+import Client from '@wp-headless/client';
+import AxiosTransport from 'my-custom-axios-transport';
+
+const transport = new AxiosTransport();
+
+const client = new Client({ ...options }, transport);
 ```
 
 ## Examples

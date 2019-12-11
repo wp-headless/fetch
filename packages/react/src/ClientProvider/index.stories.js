@@ -1,6 +1,5 @@
 import React from 'react';
 import PostList from 'testing/components/PostList';
-import Nester from 'testing/components/Nester';
 import withClient from './withClient';
 import ClientProvider from '.';
 
@@ -39,9 +38,7 @@ const WrappedContainer = withClient(Container);
 export const withClientHOC = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
-      <Nester>
-        <WrappedContainer />
-      </Nester>
+      <WrappedContainer />
     </ClientProvider>
   );
 };

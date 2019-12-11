@@ -9,27 +9,15 @@ import PostProvider from '.';
 
 export default { title: 'PostProvider' };
 
-export const postProvider = () => {
+export const contextFunction = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
-      <PostProvider id="1">{({ post }) => <Post post={post} />}</PostProvider>
+      <PostProvider id="1">{context => <Post {...context} />}</PostProvider>
     </ClientProvider>
   );
 };
 
 const WrappedContainer = withPost(Post);
-
-export const withPostHOC = () => {
-  return (
-    <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
-      <PostProvider id="1">
-        <Nester>
-          <WrappedContainer />
-        </Nester>
-      </PostProvider>
-    </ClientProvider>
-  );
-};
 
 export const loadingFallback = () => {
   return (

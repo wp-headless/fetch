@@ -1,5 +1,6 @@
 import React from 'react';
 import useSWR, { mutate } from 'swr';
+import withClient from '../ClientProvider/withClient';
 import Context from './Context';
 import renderChildren from '../utils/renderChildren';
 
@@ -7,6 +8,8 @@ const PostProvider = ({
   client,
   id,
   slug,
+  namespace,
+  resource,
   fallback,
   failed,
   children,
@@ -14,9 +17,16 @@ const PostProvider = ({
 }) => {
   const key = slug ? slug : id;
 
-  const fetcher = slug ? client.posts().slug : client.posts().get;
+  client.namespace(namespace).resource(resource);
 
-  const { data, error, isValidating, revalidate } = useSWR(key, fetcher, swr);
+  const fetcher = slug ? client.slug : client.get;
+  console.log(client.slug);
+  console.log(client.get);
+  const { data, error, isValidating, revalidate } = useSWR(
+    key,
+    key => fetcher(key),
+    swr
+  );
 
   const context = {
     post: data,
@@ -26,19 +36,24 @@ const PostProvider = ({
     fetching: isValidating
   };
 
-  let cmp = children;
-
   if (error) {
-    cmp = failed;
+    return React.cloneElement(failed, context);
   } else if (!data) {
-    cmp = fallback;
+    return React.cloneElement(fallback, context);
   }
 
   return (
     <Context.Provider value={context}>
-      {renderChildren(cmp, context)}
+      {renderChildren(children, context)}
     </Context.Provider>
   );
 };
 
-export default PostProvider;
+PostProvider.defaultProps = {
+  namespace: 'wp/v2',
+  resource: 'posts',
+  failed: <React.Fragment />,
+  fallback: <React.Fragment />
+};
+
+export default withClient(PostProvider);

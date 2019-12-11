@@ -16,6 +16,7 @@ const Post = ({ post, fetchPost, fetching }) => {
           }}
         >
           <h1>{post.title.rendered}</h1>
+          <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
         <button onClick={() => fetchPost()}>Refresh</button>
         {fetching && <Loading />}

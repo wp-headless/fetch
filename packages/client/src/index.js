@@ -264,9 +264,9 @@ export default class Client {
    *
    * @return {Response}
    */
-  async slug(slug) {
-    const response = await this.get({ per_page: 1, slug });
-    return response[0];
+  slug(slug) {
+    const params = { per_page: 1, slug };
+    return this.get(params).then(response => response[0]);
   }
 
   /**

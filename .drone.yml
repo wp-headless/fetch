@@ -42,20 +42,13 @@ steps:
     depends_on:
       - build
 
-  - name: integration
-    image: node:alpine
-    commands:
-      - yarn test:integration
-    depends_on:
-      - build      
-
   - name: browsers
     image: node:13-buster
     environment:
       BROWSERSTACK_USERNAME:
         from_secret: BROWSERSTACK_USERNAME
       BROWSERSTACK_KEY:
-        from_secret: BROWSERSTACK_KEY        
+        from_secret: BROWSERSTACK_KEY
     commands:
       - yarn test:browsers
     depends_on:

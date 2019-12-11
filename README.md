@@ -7,13 +7,13 @@
   <img src="https://img.shields.io/bundlephobia/minzip/@wp-headless/client" alt="Bundle size">
 </p>
 
-<p align="center" style="color: #6a737d">(Currently in alpha release - use in production at your own risk)</p>
+<p align="center">(Currently in alpha release - use in production at your own risk)</p>
 
 # Fetch
 
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
-- [Why?](#why?)
+- [Why?](#why)
 - [Installation](#installation)
 - [Usage](#usage)
   - [Resources](#resources)

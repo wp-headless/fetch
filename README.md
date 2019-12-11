@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/bundlephobia/minzip/@wp-headless/client" alt="Bundle size">
 </p>
 
-> (Currently in alpha release - use in production at your own risk)
+<p align="center" color="#6a737d">(Currently in alpha release - use in production at your own risk)</p>
 
 # Fetch
 

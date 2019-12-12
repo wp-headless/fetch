@@ -21,6 +21,7 @@ A Wordpress API client that works both in the browser and in Node. Tiny footprin
   - [Request parameters](#request-parameters)
   - [Embed data](#embed-data)
   - [File uploading](#file-uploading)
+  - [Authentication](#auth)
   - [Helper functions](#syntactical-sugar-helper-functions)
 - [Transport layers](#transport-layers)
   - [Fetch](#fetch-1)
@@ -254,6 +255,30 @@ client
     title: 'Puppy dog with a bone'
   });
 ```
+
+### Authentication
+
+At present this package only offers simple cookie based auth; Once a user logs into the WordPress admin their browser will have a cookie set. You will also need to set a `nonce` to [enable cookie auth](https://developer.wordpress.org/rest-api/using-the-rest-api/authentication/#cookie-authentication). Creating the nonce as follows:
+
+```php
+wp_localize_script( 'wp-api', 'wpApiSettings', array(
+    'root' => esc_url_raw( rest_url() ),
+    'nonce' => wp_create_nonce( 'wp_rest' )
+) );
+```
+
+Then init the client something like:
+
+```javascript
+import Client from '@wp-headless/client';
+
+const client = new Client({
+  endpoint: window.wpApiSettings.root,
+  nonce: window.wpApiSettings.nonce
+});
+```
+
+Of course you would need to be on the same domain to access `window.wpApiSettings`. We will be offering more flexible JWT based auth strategies in the near future.
 
 ### Syntactical sugar (helper functions)
 

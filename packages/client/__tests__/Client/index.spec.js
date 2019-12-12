@@ -25,7 +25,6 @@ describe('Client', () => {
       resource: '',
       config: {
         referrer: 'wp-headless',
-        credentials: 'include',
         headers: {
           'Content-Type': 'application/json'
         }
@@ -51,7 +50,6 @@ describe('Client', () => {
       resource: '',
       config: {
         referrer: 'WordMess',
-        credentials: 'include',
         foo: 'bar',
         headers: {
           'Content-Type': 'application/json',

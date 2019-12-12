@@ -32,7 +32,7 @@ const FetchProvider = ({
         .update(key, attributes)
     );
   };
-
+  console.log(error);
   const context = {
     data,
     error,

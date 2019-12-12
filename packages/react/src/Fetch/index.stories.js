@@ -12,8 +12,11 @@ const WrappedContainer = withPost(Post);
 
 export const fetchById = () => {
   return (
-    <ClientProvider endpoint="https://beamaustralia.dev/wp-json">
-      <FetchProvider id="1" fallback={<Loading />} failed={<Error />}>
+    <ClientProvider
+      endpoint="https://beamaustralia.local/wp-json"
+      nonce="69f27d9956"
+    >
+      <FetchProvider id="2073035311" fallback={<Loading />} failed={<Error />}>
         <WrappedContainer />
       </FetchProvider>
     </ClientProvider>

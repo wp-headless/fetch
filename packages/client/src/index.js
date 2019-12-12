@@ -46,6 +46,7 @@ export default class Client {
     resource: '',
     config: {
       referrer: 'wp-headless',
+      credentials: 'include',
       headers: {
         'Content-Type': 'application/json'
       }

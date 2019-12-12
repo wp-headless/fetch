@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Post = ({ data, fetch, update, isFetching }) => {
+const User = ({ data, fetch, update, isFetching }) => {
   if (!data) {
     return null;
   }
@@ -14,8 +14,8 @@ const Post = ({ data, fetch, update, isFetching }) => {
             margin: '0 0 20px 0'
           }}
         >
-          <h1>{data.title.rendered}</h1>
-          <p dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
+          <h1>{data.display_name}</h1>
+          <p>{data.user_email}</p>
         </div>
         <button onClick={() => fetch()}>Refresh</button>
         <button onClick={() => update({ title: 'updated!' })}>update</button>
@@ -25,4 +25,4 @@ const Post = ({ data, fetch, update, isFetching }) => {
   );
 };
 
-export default Post;
+export default User;

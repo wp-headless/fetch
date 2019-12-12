@@ -23,12 +23,22 @@ const FetchProvider = ({
 
   const { data, error, isValidating, revalidate } = useSWR(key, fetcher, swr);
 
+  const update = attributes => {
+    return mutate(
+      key,
+      client
+        .namespace(namespace)
+        .resource(resource)
+        .update(key, attributes)
+    );
+  };
+
   const context = {
-    post: data,
+    data,
     error,
+    update,
     fetch: revalidate,
-    updatePost: () => {},
-    fetching: isValidating
+    isFetching: isValidating
   };
 
   if (error) {
@@ -48,7 +58,10 @@ FetchProvider.defaultProps = {
   namespace: 'wp/v2',
   resource: 'posts',
   failed: <React.Fragment />,
-  fallback: <React.Fragment />
+  fallback: <React.Fragment />,
+  swr: {
+    refreshInterval: 30000
+  }
 };
 
 export default withClient(FetchProvider);

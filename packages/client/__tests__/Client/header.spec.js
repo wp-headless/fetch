@@ -18,6 +18,11 @@ describe('Client.header', () => {
   it('set a single header', () => {
     client.header('X-Foo', 'bar');
     expect(client.config.headers['X-Foo']).toBe('bar');
+    client.request('post');
+    expect(transport.post.mock.calls[0][2].headers).toEqual({
+      'Content-Type': 'application/json',
+      'X-Foo': 'bar'
+    });
   });
 
   it('can return headers', () => {
@@ -27,6 +32,12 @@ describe('Client.header', () => {
   it('set a headers object', () => {
     client.header({ 'X-Foo': '1', 'X-Bar': '2' });
     expect(client.config.headers).toEqual({
+      'X-Foo': '1',
+      'X-Bar': '2'
+    });
+    client.request('post');
+    expect(transport.post.mock.calls[0][2].headers).toEqual({
+      'Content-Type': 'application/json',
       'X-Foo': '1',
       'X-Bar': '2'
     });

@@ -81,12 +81,27 @@ describe('Client.request', () => {
   });
 
   it('merges global request config', () => {
-    client.options.config = { a: '1', b: '2' };
-    client.config = { a: '2', foo: 'bar' };
+    client.options.config = {
+      referrer: 'wp-headless',
+      credentials: 'include',
+      headers: {
+        'Content-Type': 'application/json'
+      }
+    };
+    client.config = {
+      credentials: 'same-origin',
+      headers: {
+        'X-Foo': 'bar'
+      }
+    };
     client.request('post');
     expect(transport.post.mock.calls[0][2]).toEqual({
-      ...client.options.config,
-      ...client.config
+      referrer: 'wp-headless',
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Foo': 'bar'
+      }
     });
   });
 

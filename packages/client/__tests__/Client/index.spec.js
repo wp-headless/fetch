@@ -90,4 +90,23 @@ describe('Client', () => {
       expect(client.options.resource).toBe(method);
     });
   });
+
+  it('attaches nonce header', () => {
+    const transport = new MockTransport();
+    let client = new Client({}, transport);
+    client.request('post');
+    expect(transport.post.mock.calls[0][2].headers['X-WP-Nonce']).toBe(
+      undefined
+    );
+    client = new Client(
+      {
+        nonce: 'mock-nonce-value'
+      },
+      transport
+    );
+    client.request('post');
+    expect(transport.post.mock.calls[1][2].headers['X-WP-Nonce']).toBe(
+      'mock-nonce-value'
+    );
+  });
 });

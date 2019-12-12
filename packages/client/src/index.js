@@ -36,7 +36,7 @@ export default class Client {
   transport = null;
 
   /**
-   * Client options.
+   * Default client options.
    *
    * @var {object}
    */
@@ -91,6 +91,10 @@ export default class Client {
     this.transport = !transport ? new Transport() : transport;
 
     this.options = deepMerge(this.options, options);
+
+    if (this.options.nonce) {
+      this.header('X-WP-Nonce', this.options.nonce);
+    }
 
     this.initialEndpoint = this.options.endpoint;
 

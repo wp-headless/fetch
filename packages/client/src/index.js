@@ -1,10 +1,8 @@
 import FormData from 'isomorphic-form-data';
 import urljoin from 'url-join';
-import merge from 'deep-extend';
 import Transport from './Transport';
-import { isObject } from './util';
+import deepMerge from 'deepmerge';
 
-// HTTP methods map.
 const METHODS = {
   get: 'get',
   create: 'post',
@@ -12,7 +10,6 @@ const METHODS = {
   delete: 'delete'
 };
 
-// API resources.
 const RESOURCES = [
   'categories',
   'comments',
@@ -27,6 +24,8 @@ const RESOURCES = [
   'users',
   'search'
 ];
+
+const isObject = value => value !== null && typeof value === 'object';
 
 export default class Client {
   /**
@@ -96,7 +95,7 @@ export default class Client {
   constructor(options = {}, transport) {
     this.transport = !transport ? new Transport() : transport;
 
-    this.options = merge(this.options, options);
+    this.options = deepMerge(this.options, options);
 
     this.initialEndpoint = this.options.endpoint;
 
@@ -140,7 +139,7 @@ export default class Client {
   _getParams(params) {
     let merged;
     params = isObject(params) ? params : {};
-    merged = { ...this.params, ...params };
+    merged = deepMerge(this.params, params);
 
     if (this.formData instanceof FormData) {
       Object.keys(merged).forEach(key => {
@@ -158,7 +157,7 @@ export default class Client {
    * @return {object}
    */
   _getConfig() {
-    return merge(this.options.config, this.config);
+    return deepMerge(this.options.config, this.config);
   }
 
   /**

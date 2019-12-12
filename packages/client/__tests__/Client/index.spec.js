@@ -36,7 +36,11 @@ describe('Client', () => {
       endpoint: 'https://wordpress.test/wp-json',
       config: {
         referrer: 'WordMess',
-        foo: 'bar'
+        foo: 'bar',
+        headers: {
+          'X-Foo': 'bar'
+        },
+        colors: ['red', 'green', 'blue']
       }
     });
     expect(client.options).toEqual({
@@ -46,8 +50,10 @@ describe('Client', () => {
         referrer: 'WordMess',
         foo: 'bar',
         headers: {
-          'Content-Type': 'application/json'
-        }
+          'Content-Type': 'application/json',
+          'X-Foo': 'bar'
+        },
+        colors: ['red', 'green', 'blue']
       }
     });
   });

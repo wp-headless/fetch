@@ -26,10 +26,3 @@ context = require.context(
   /\.spec\.js$/
 );
 context.keys().forEach(context);
-
-context = require.context(
-  '../packages/client/__tests__/utils',
-  true,
-  /\.spec\.js$/
-);
-context.keys().forEach(context);

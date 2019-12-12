@@ -102,7 +102,7 @@ describe('with data', () => {
         fetchMock.once('*', {});
         transport.request(verb, 'https://wp.com/wp-json', data);
         expect(fetchMock.calls()[0][0]).toBe(
-          'https://wp.com/wp-json?bones[]=47&foo=bar&puppies[]=21&puppies[]=33&puppies[]=150'
+          'https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150&bones[]=47'
         );
         expect(fetchMock.calls()[0][1].body).toBe(undefined);
       } else {

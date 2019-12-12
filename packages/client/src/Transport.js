@@ -1,4 +1,4 @@
-import queryString from 'query-string';
+import qsEncode from '@wp-headless/qs-encode';
 import FormData from 'isomorphic-form-data';
 import HTTPError from './HTTPError';
 
@@ -24,10 +24,7 @@ export default class FetchTransport {
             'Unable to encode FormData for GET, DELETE requests'
           );
         }
-        const qs = queryString.stringify(data, {
-          arrayFormat: 'bracket'
-        });
-        url = `${url}?${qs}`;
+        url = url + '?' + qsEncode(data);
       }
     }
 

@@ -3,8 +3,8 @@
   <br />  <br />
   <a href="https://cloud.drone.io/wp-headless/fetch"><img src="https://cloud.drone.io/api/badges/wp-headless/fetch/status.svg" alt="drone"></a>
   <a href="https://codecov.io/gh/wp-headless/fetch/branch/master"><img src="https://img.shields.io/codecov/c/github/wp-headless/fetch/master.svg" alt="Coverage Status"></a>  
-  <img src="https://img.shields.io/npm/v/@wp-headless/client" alt="npm">
-  <img src="https://img.shields.io/bundlephobia/minzip/@wp-headless/client" alt="Bundle size">
+  <a href="https://www.npmjs.com/package/@wp-headless/client"><img src="https://img.shields.io/npm/v/@wp-headless/client" alt="npm"></a>
+  <a href="https://bundlephobia.com/result?p=@wp-headless/client"><img src="https://img.shields.io/bundlephobia/minzip/@wp-headless/client" alt="Bundle size"></a>
 </p>
 
 <p align="center">(Currently in alpha release - use in production at your own risk)</p>

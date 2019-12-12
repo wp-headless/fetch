@@ -89,4 +89,18 @@ describe('Client.request', () => {
       ...client.config
     });
   });
+
+  it('restores options after requesting', () => {
+    client
+      .endpoint('https://foo.com/wp-json')
+      .namespace('foo/v3')
+      .resource('foobies');
+    expect(client.options.endpoint).toEqual('https://foo.com/wp-json');
+    expect(client.options.namespace).toEqual('foo/v3');
+    expect(client.options.resource).toEqual('foobies');
+    client.request('post');
+    expect(client.options.endpoint).toEqual(endpoint);
+    expect(client.options.namespace).toEqual('wp/v2');
+    expect(client.options.resource).toEqual('');
+  });
 });

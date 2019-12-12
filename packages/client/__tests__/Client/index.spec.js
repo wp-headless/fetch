@@ -22,6 +22,7 @@ describe('Client', () => {
     expect(client.options).toEqual({
       endpoint: '',
       namespace: 'wp/v2',
+      resource: '',
       config: {
         referrer: 'wp-headless',
         headers: {
@@ -46,6 +47,7 @@ describe('Client', () => {
     expect(client.options).toEqual({
       endpoint: 'https://wordpress.test/wp-json',
       namespace: 'wp/v2',
+      resource: '',
       config: {
         referrer: 'WordMess',
         foo: 'bar',
@@ -83,7 +85,7 @@ describe('Client', () => {
       'search'
     ].forEach(method => {
       client[method]();
-      expect(client.path).toBe(method);
+      expect(client.options.resource).toBe(method);
     });
   });
 });

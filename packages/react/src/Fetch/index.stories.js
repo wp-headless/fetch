@@ -53,6 +53,22 @@ export const fetchPage = () => {
   );
 };
 
+export const fetchCustomType = () => {
+  return (
+    <ClientProvider endpoint="https://allblackshop.com/wp-json">
+      <FetchProvider
+        namespace="wp/v2"
+        resource="product"
+        slug="french-rugby-cap"
+        fallback={<Loading />}
+        failed={<Error />}
+      >
+        <WrappedContainer />
+      </FetchProvider>
+    </ClientProvider>
+  );
+};
+
 export const errorFallback = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">

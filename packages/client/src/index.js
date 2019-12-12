@@ -36,13 +36,6 @@ export default class Client {
   transport = null;
 
   /**
-   * Initial endpoint.
-   *
-   * @var {string}
-   */
-  initialEndpoint = null;
-
-  /**
    * Client options.
    *
    * @var {object}
@@ -50,6 +43,7 @@ export default class Client {
   options = {
     endpoint: '',
     namespace: 'wp/v2',
+    resource: '',
     config: {
       referrer: 'wp-headless',
       headers: {
@@ -59,11 +53,11 @@ export default class Client {
   };
 
   /**
-   * Request path.
+   * Initial endpoint.
    *
    * @var {string}
    */
-  path = '';
+  initialEndpoint = '';
 
   /**
    * Request params.
@@ -122,11 +116,9 @@ export default class Client {
    * @return {string}
    */
   _getUrl(path) {
-    const safePath = path ? path : '';
-    const { endpoint, namespace } = this.options;
-    const safeEndpoint = endpoint.replace(namespace, '');
-    this.endpoint(this.initialEndpoint); // restore endpoint
-    return urljoin(safeEndpoint, namespace, this.path, String(safePath));
+    const { endpoint, namespace, resource } = this.options;
+    const safeEndpoint = endpoint.replace(namespace, '').replace(resource, '');
+    return urljoin(safeEndpoint, namespace, resource, String(path || ''));
   }
 
   /**
@@ -158,6 +150,19 @@ export default class Client {
    */
   _getConfig() {
     return deepMerge(this.options.config, this.config);
+  }
+
+  /**
+   * Restores the path configuration
+   *
+   * @return {void}
+   */
+  _restore() {
+    this.options = deepMerge(this.options, {
+      endpoint: this.initialEndpoint,
+      namespace: 'wp/v2',
+      resource: ''
+    });
   }
 
   /**
@@ -241,14 +246,14 @@ export default class Client {
   }
 
   /**
-   * Sets the resource request path.
+   * Sets the resource path.
    *
-   * @param  {string} path
+   * @param  {string} resource
    *
    * @return {Client}
    */
-  resource(path) {
-    this.path = path;
+  resource(resource) {
+    this.options.resource = resource;
     return this;
   }
 
@@ -299,10 +304,14 @@ export default class Client {
       params = path;
       path = '';
     }
-    return this.transport[verb](
+    const response = this.transport[verb](
       this._getUrl(path),
       this._getParams(params),
       this._getConfig()
     );
+
+    this._restore();
+
+    return response;
   }
 }

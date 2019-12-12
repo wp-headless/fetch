@@ -15,9 +15,9 @@ describe('Client.resource', () => {
     transport.resetMocks();
   });
 
-  it('sets the current path', () => {
+  it('sets the current resorce path', () => {
     client.resource('products');
-    expect(client.path).toBe('products');
+    expect(client.options.resource).toBe('products');
   });
 
   it('has fluent interface', () => {

@@ -26,7 +26,7 @@ const FetchProvider = ({
   const context = {
     post: data,
     error,
-    fetchPost: revalidate,
+    fetch: revalidate,
     updatePost: () => {},
     fetching: isValidating
   };

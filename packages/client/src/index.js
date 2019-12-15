@@ -264,13 +264,15 @@ export default class Client {
   /**
    * Fetch a single item by slug
    *
-   * @param  {string} postSlug
+   * @param  {string} slug
+   * @param  {object} params
    *
    * @return {Response}
    */
-  slug = slug => {
-    const params = { per_page: 1, slug };
-    return this.get(params).then(response => response[0]);
+  slug = (slug, params) => {
+    return this.get({ ...params, per_page: 1, slug }).then(
+      response => response[0]
+    );
   };
 
   /**

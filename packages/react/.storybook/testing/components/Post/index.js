@@ -1,9 +1,10 @@
 import React from 'react';
 
-const Post = ({ data, fetch, update, isFetching }) => {
-  if (!data) {
-    return null;
+const Post = ({ post, fetch, update, destroy, isFetching }) => {
+  if (!post) {
+    return <p>Post not found</p>;
   }
+  console.log(post);
   return (
     <div style={{ padding: 80, background: '#eee' }}>
       <div style={{ margin: '0 auto', width: 400 }}>
@@ -14,11 +15,16 @@ const Post = ({ data, fetch, update, isFetching }) => {
             margin: '0 0 20px 0'
           }}
         >
-          <h1>{data.title.rendered}</h1>
-          <p dangerouslySetInnerHTML={{ __html: data.content.rendered }} />
+          <h1>{post.title.rendered}</h1>
+          <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
         <button onClick={() => fetch()}>Refresh</button>
-        <button onClick={() => update({ title: 'updated!' })}>update</button>
+        <button
+          onClick={() => update({ title: `Updated: ${post.title.rendered}` })}
+        >
+          Update
+        </button>
+        <button onClick={() => destroy()}>Delete</button>
         {isFetching && <p>Refreshing...</p>}
       </div>
     </div>

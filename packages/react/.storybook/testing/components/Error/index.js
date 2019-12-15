@@ -1,12 +1,13 @@
 import React from 'react';
 
 const Error = ({ error }) => {
-  let errorString = '';
-  if (error instanceof TypeError) {
-    errorString = error.message;
-  } else {
-    errorString = JSON.stringify(error.response, undefined, 4);
+  if (!error) {
+    return <p>No errors</p>;
   }
+  const errorString =
+    error instanceof TypeError
+      ? error.message
+      : JSON.stringify(error.response, undefined, 4);
   return (
     <div style={{ padding: 50, margin: '0 auto', width: 500 }}>
       <h3 style={{ color: '#ec5d5d' }}>Oops..!</h3>

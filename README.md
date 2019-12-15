@@ -14,15 +14,19 @@
 A Wordpress API client that works both in the browser and in Node. Tiny footprint, > 95% code coverage, [browser tested](https://browserstack.com) down to IE11, tree shakable CJS and ES6 builds, expressive syntax.
 
 - [Why?](#why)
-- [Installation](#installation)
 - [Usage](#usage)
-  - [Resources](#resources)
-  - [HTTP methods](#http-methods)
-  - [Request parameters](#request-parameters)
-  - [Embed data](#embed-data)
-  - [File uploading](#file-uploading)
-  - [Authentication](#authentication)
-  - [Helper functions](#syntactical-sugar-helper-functions)
+
+  - Client
+    - [Installation](#installation)
+    - [Resources](#resources)
+    - [HTTP methods](#http-methods)
+    - [Request parameters](#request-parameters)
+    - [Embed data](#embed-data)
+    - [File uploading](#file-uploading)
+    - [Authentication](#authentication)
+    - [Helper functions](#syntactical-sugar-helper-functions)
+  - React
+
 - [Transport layers](#transport-layers)
   - [Fetch](#fetch-1)
   - [Others](#others)
@@ -39,6 +43,10 @@ There are great alternatives such as [wpapi](https://github.com/WP-API/node-wpap
 - Lack of automated browser testing and coverage
 
 We intend to build and support a lean and well tested packages that fit into the modern ES6 javascript ecosystem.
+
+# Client
+
+The fundamental tool in the `wp-headless` ecosystem is the API client.
 
 ## Installation
 
@@ -336,6 +344,36 @@ import AxiosTransport from 'my-custom-axios-transport';
 const transport = new AxiosTransport();
 
 const client = new Client({ ...options }, transport);
+```
+
+# React
+
+We provide (and reccomend) React hooks that take care of your entire darta fetching life cycle. From fetching initial data, caching, optamistic updates, mutating and refetching - its all covered in an incredibly easy to use hook api. Thanks in a large part to [Zeit's swr](https://github.com/zeit/swr)
+
+## Installation
+
+Yarn
+
+```bash
+yarn add @wp-headless/react
+```
+
+NPM
+
+```bash
+npm install @wp-headless/react
+```
+
+## Usage
+
+```javascript
+import React from 'react';
+import { usePost } from '@wp-headless/react';
+
+export const Post = ({ postId }) => {
+  const { post, fetching } = usePost(postId);
+  return <h1>{post.title.rendered}</h1>;
+};
 ```
 
 ## Examples

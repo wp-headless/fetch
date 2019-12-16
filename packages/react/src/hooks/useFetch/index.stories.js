@@ -143,3 +143,29 @@ export const Taxonomies = () => {
     </ClientProvider>
   );
 };
+
+/**
+ * Dependant fetching
+ */
+
+const FetchPageAndAuthor = ({ children }) => {
+  const { data: page } = useFetch('wp/v2', 'pages', 2);
+  const { data: author } = useFetch(() => ['wp/v2', 'users', page.author]);
+  return children({ page, author });
+};
+
+export const PageAndAuthor = () => {
+  return (
+    <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
+      <h1>Page and author</h1>
+      <FetchPageAndAuthor>
+        {({ page, author }) => (
+          <div>
+            <h2>Created by {author && author.name}</h2>
+            <Post post={page} />
+          </div>
+        )}
+      </FetchPageAndAuthor>
+    </ClientProvider>
+  );
+};

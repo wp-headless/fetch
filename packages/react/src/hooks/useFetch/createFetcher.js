@@ -6,7 +6,13 @@ export default function createFetcher(method, args) {
 
   const client = useClient();
 
-  const key = [namespace, resource, id, params];
+  let key;
+
+  if (typeof namespace === 'function') {
+    key = namespace;
+  } else {
+    key = [namespace, resource, id, params];
+  }
 
   const fetcher = (namespace, resource, id, params) => {
     return client

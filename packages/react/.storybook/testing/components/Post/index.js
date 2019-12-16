@@ -4,7 +4,6 @@ const Post = ({ post, fetch, update, destroy, isFetching }) => {
   if (!post) {
     return <p>Post not found</p>;
   }
-  console.log(post);
   return (
     <div style={{ padding: 80, background: '#eee' }}>
       <div style={{ margin: '0 auto', width: 400 }}>

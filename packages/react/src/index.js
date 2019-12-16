@@ -1,4 +1,4 @@
 export { useClient, ClientProvider } from './hooks/client';
-export { default as useFetch } from './useFetch';
-export { default as useFetchById } from './useFetchById';
-export { default as usePost } from './usePost';
+export { default as useFetch } from './hooks/useFetch';
+export { default as useFetchById } from './hooks/useFetchById';
+export { default as usePost } from './hooks/usePost';

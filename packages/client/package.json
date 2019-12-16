@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/client",
   "private": false,
-  "version": "0.8.3",
+  "version": "0.8.4",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "JavaScript client for the WordPress REST API",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",

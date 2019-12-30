@@ -3,41 +3,30 @@ import Client from '../../src';
 
 // describe
 
-describe('Client.resource', () => {
-  it('can return a param', () => {
+describe('Client.param', () => {
+  it('has empty globalParams by default', () => {
     const client = new Client();
-    client.params.foo = 'bar';
-    expect(client.param('foo')).toBe('bar');
+    expect(client.globalParams).toEqual({});
   });
 
-  it('can set a param', () => {
+  it('can set a queryParam', () => {
     const client = new Client();
     client.param('test', 'foo');
-    expect(client.params.test).toBe('foo');
+    expect(client.globalParams.test).toBe('foo');
   });
 
-  it('can set a param object', () => {
+  it('can set a queryParam object', () => {
     const client = new Client();
     client.param({ a: '1', b: '2' });
-    expect(client.params).toEqual({
-      a: '1',
-      b: '2'
-    });
+    expect(client.globalParams).toEqual({ a: '1', b: '2' });
   });
 
-  it('merges complex objects', () => {
+  it('merges objects', () => {
     const client = new Client();
-    const params = {
-      foo: 'bar',
-      colors: { red: '#FF3333', blue: '#3342FF', green: '#33FF5B' },
-      animals: {
-        mamals: ['bears', 'cats', 'humans'],
-        avian: ['swans', 'seagulls', 'eagles'],
-        insects: false
-      }
-    };
-    client.param(params);
-    expect(client.params).toEqual(params);
+    client.param({ a: '1', b: '2' });
+    expect(client.globalParams).toEqual({ a: '1', b: '2' });
+    client.param({ b: '3', c: 'd', e: 'f' });
+    expect(client.globalParams).toEqual({ a: '1', b: '3', c: 'd', e: 'f' });
   });
 
   it('has fluent interface', () => {

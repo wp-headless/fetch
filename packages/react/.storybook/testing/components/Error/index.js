@@ -4,6 +4,7 @@ const Error = ({ error }) => {
   if (!error) {
     return <p>No errors</p>;
   }
+  console.log(error);
   const errorString =
     error instanceof TypeError
       ? error.message

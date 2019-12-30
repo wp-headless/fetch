@@ -6,7 +6,7 @@ import MockTransport from '../../__mocks__/MockTransport';
 
 const transport = new MockTransport();
 const endpoint = 'http://wordpress.test/wp-json';
-const client = new Client({ endpoint }, transport);
+const client = new Client(endpoint, transport);
 
 const params = {
   title: 'Hello World',
@@ -16,11 +16,10 @@ const params = {
 // describe
 
 describe('Client.embed', () => {
-  it('can enable embed mode', () => {
-    client.embed().request('post', params);
-    expect(transport.post.mock.calls[0][1]).toEqual({
-      _embed: true,
-      ...params
+  it('sends embed as url param', () => {
+    client.embed().create(params);
+    expect(transport.request.mock.calls[0][1].queryParams).toEqual({
+      _embed: 1
     });
   });
 

@@ -1,14 +1,10 @@
 import expect from 'expect';
-import FormData from 'isomorphic-form-data';
 import fetchMock from 'fetch-mock';
-import Transport from '../../src/Transport';
-import HTTPError from '../../src/HTTPError';
+import { Transport, HTTPError } from '../../src';
 
 // setup
 
 const transport = new Transport();
-
-const verbs = ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'];
 
 beforeEach(() => {
   fetchMock.reset();
@@ -16,168 +12,136 @@ beforeEach(() => {
 
 // describe
 
-describe('request calls', () => {
-  verbs.forEach(verb => {
-    it(`${verb} calls fetch once`, () => {
-      fetchMock.once('https://wp.com/wp-json', {});
-      transport
-        .request(verb, 'https://wp.com/wp-json')
-        .catch(error => console.log(error));
-      expect(fetchMock.calls().length).toEqual(1);
-    });
-  });
+it('calls fetch() once', () => {
+  fetchMock.once('*', {});
+  transport.request('https://wp.com/wp-json');
+  expect(fetchMock.calls().length).toEqual(1);
 });
 
-describe('verbs', () => {
-  verbs.forEach(verb => {
-    it(`${verb} sends correct http verb`, () => {
-      fetchMock.once(
-        'https://wp.com/wp-json',
-        {},
-        {
-          method: verb
-        }
-      );
-      transport.request(verb, 'https://wp.com/wp-json');
-      expect(fetchMock.calls()[0][1].method).toEqual(verb);
-    });
-  });
+it('fetches correct http verb', () => {
+  ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'].forEach(
+    (method, index) => {
+      fetchMock.once('*', {}, { method });
+      transport.request('https://wp.com/wp-json', { method });
+      expect(fetchMock.calls()[index][1].method).toEqual(method);
+    }
+  );
 });
 
-describe('url', () => {
-  verbs.forEach(verb => {
-    it(`${verb} calls correct url`, () => {
-      fetchMock.once('https://wp.com/wp-json', {});
-      transport.request(verb, 'https://wp.com/wp-json');
-      expect(fetchMock.calls()[0][0]).toEqual('https://wp.com/wp-json');
-    });
-  });
+it('uppercases http verb', () => {
+  fetchMock.once('*', {}, { method: 'get' });
+  transport.request('https://wp.com/wp-json', { method: 'get' });
+  expect(fetchMock.calls()[0][1].method).toEqual('GET');
 });
 
-describe('headers', () => {
-  const config = {
+it('calls fetch() with correct input url', () => {
+  const path = 'https://wp.com/wp-json/wp/v1/posts';
+  fetchMock.once(path, {});
+  transport.request(path);
+  expect(fetchMock.calls()[0][0]).toEqual(path);
+});
+
+it(`calls fetch() with correct headers`, () => {
+  const options = {
     headers: {
       'X-Foo': 'bar'
     }
   };
+  fetchMock.once('*', {});
+  transport.request('*', options);
+  expect(fetchMock.calls()[0][1].headers).toEqual(options.headers);
+});
 
-  verbs.forEach(verb => {
-    it(`${verb} sends correct headers`, () => {
-      fetchMock.once('https://wp.com/wp-json', {});
-      transport.request(verb, 'https://wp.com/wp-json', {}, config);
-      expect(fetchMock.calls()[0][1].headers).toEqual(
-        new Headers(config.headers)
-      );
+it('passes options to fetch()', () => {
+  fetchMock.once('*', {});
+  transport.request('*', {
+    referrer: 'bar',
+    cors: 'no-cors'
+  });
+  expect(fetchMock.calls()[0][1]).toEqual({
+    referrer: 'bar',
+    cors: 'no-cors'
+  });
+});
+
+it('can send json data', () => {
+  const json = { foo: 'bar', puppies: [21, 33, 150], bones: ['47'] };
+
+  ['POST', 'PUT', 'PATCH'].forEach(method => {
+    fetchMock.once('*', {}, { method });
+    transport.request('https://wp.com/wp-json', { method, json });
+    expect(fetchMock.calls()[0][1].body).toEqual(JSON.stringify(json));
+    expect(fetchMock.calls()[0][1].headers).toEqual({
+      'Content-Type': 'application/json'
     });
   });
 });
 
-describe('merge config', () => {
-  const config = {
-    foo: 'bar',
-    bar: 'foo'
-  };
+it('does not send json data for non-body methods', () => {
+  const json = { foo: 'bar', puppies: [21, 33, 150], bones: ['47'] };
 
-  verbs.forEach(verb => {
-    const expected = {
-      ...config,
-      method: verb,
-      headers: new Headers()
-    };
-
-    it(`${verb} passes custom config`, () => {
-      fetchMock.once('https://wp.com/wp-json', {});
-      transport.request(verb, 'https://wp.com/wp-json', {}, config);
-      expect(fetchMock.calls()[0][1]).toEqual(expected);
-    });
+  ['DELETE', 'GET'].forEach(method => {
+    fetchMock.once('*', {}, { method });
+    transport.request('https://wp.com/wp-json', { method, json });
+    expect(fetchMock.calls()[0][1].body).toBe(undefined);
   });
 });
 
-describe('with data', () => {
-  const data = { foo: 'bar', puppies: [21, 33, 150], bones: ['47'] };
-
-  verbs.forEach(verb => {
-    it(`${verb} sends data`, () => {
-      if (['GET', 'DELETE'].includes(verb)) {
-        fetchMock.once('*', {});
-        transport.request(verb, 'https://wp.com/wp-json', data);
-        expect(fetchMock.calls()[0][0]).toBe(
-          'https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150&bones[]=47'
-        );
-        expect(fetchMock.calls()[0][1].body).toBe(undefined);
-      } else {
-        fetchMock.once('*', {});
-        transport.request(verb, 'https://wp.com/wp-json', data);
-        expect(fetchMock.calls()[0][1].body).toEqual(JSON.stringify(data));
-      }
-    });
+it('has undefined body with json data', () => {
+  ['POST', 'PUT', 'PATCH'].forEach(method => {
+    fetchMock.once('*', {}, { method });
+    transport.request('https://wp.com/wp-json', { method, json: undefined });
+    expect(fetchMock.calls()[0][1].body).toBe(undefined);
   });
 });
 
-describe('with form data', () => {
-  const formData = new FormData();
-  formData.append('foo', 'bar');
-
-  verbs.forEach(verb => {
-    it(`${verb} sends form data`, () => {
-      if (['GET', 'DELETE'].includes(verb)) {
-        try {
-          fetchMock.once('https://wp.com/wp-json', {});
-          transport.request(verb, 'https://wp.com/wp-json', formData);
-        } catch (error) {
-          expect(error instanceof TypeError).toBe(true);
-          expect(error.message).toBe(
-            'Unable to encode FormData for GET, DELETE requests'
-          );
-        }
-      } else {
-        fetchMock.once('https://wp.com/wp-json', {});
-        transport.request(verb, 'https://wp.com/wp-json', formData);
-        expect(fetchMock.calls()[0][1].body instanceof FormData).toBe(true);
-      }
-    });
+it('has no json header without json data', () => {
+  ['POST', 'PUT', 'PATCH'].forEach(method => {
+    fetchMock.once('*', {}, { method });
+    transport.request('https://wp.com/wp-json', { method, json: undefined });
+    expect(fetchMock.calls()[0][1].headers).toEqual(undefined);
   });
 });
 
-describe('without data', () => {
-  verbs.forEach(verb => {
-    it(`${verb} sends data`, () => {
-      fetchMock.once('https://wp.com/wp-json', {});
-      transport.request(verb, 'https://wp.com/wp-json');
-      if (['GET', 'DELETE'].includes(verb)) {
-        expect(fetchMock.calls()[0][0]).toBe('https://wp.com/wp-json');
-        expect(fetchMock.calls()[0][1].body).toBe(undefined);
-      } else {
-        expect(fetchMock.calls()[0][1].body).toBe(undefined);
-      }
-    });
+it('url encodes queryParams', () => {
+  const queryParams = { foo: 'bar', puppies: [21, 33, 150], bones: ['47'] };
+
+  fetchMock.once('*', {});
+  transport.request('https://wp.com/wp-json', { queryParams });
+  expect(fetchMock.calls()[0][0]).toBe(
+    'https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150&bones[]=47'
+  );
+  expect(fetchMock.calls()[0][1].body).toBe(undefined);
+});
+
+it('url encodes json data for non-body methods', () => {
+  const queryParams = { foo: 'bar1' };
+  const json = { foo: 'bar', puppies: [21, 33, 150], bones: ['47'] };
+
+  ['DELETE', 'GET'].forEach(method => {
+    fetchMock.once('*', {}, { method });
+    transport.request('https://wp.com/wp-json', { queryParams, json, method });
+    expect(fetchMock.calls()[0][0]).toBe(
+      'https://wp.com/wp-json?foo=bar&puppies[]=21&puppies[]=33&puppies[]=150&bones[]=47'
+    );
+    expect(fetchMock.calls()[0][1].body).toBe(undefined);
   });
 });
 
-describe('returns json', () => {
-  verbs.forEach(verb => {
-    it(`${verb} returns data`, () => {
-      fetchMock.once('https://wp.com/wp-json', { data: { mock: 'response' } });
-      transport.request(verb, 'https://wp.com/wp-json').then(response => {
-        expect(response.data).toEqual({ mock: 'response' });
-      });
-    });
-  });
+it('returns json', async () => {
+  fetchMock.once('https://wp.com/wp-json', { foo: 'bar' });
+  const response = await transport.request('https://wp.com/wp-json');
+  expect(response).toEqual({ foo: 'bar' });
 });
 
-describe('http exceptions', () => {
+it('throws http exceptions', () => {
   const response = {
     status: 503,
     body: { foo: 'bar' }
   };
-
-  verbs.forEach(verb => {
-    it(`${verb} throws http exceptions`, () => {
-      fetchMock.once('*', response);
-      return transport.request(verb, 'https://wp.com/wp-json').catch(error => {
-        expect(error instanceof HTTPError).toBe(true);
-        expect(error.response).toEqual({ foo: 'bar' });
-      });
-    });
+  fetchMock.once('*', response);
+  return transport.request('https://wp.com/wp-json').catch(error => {
+    expect(error instanceof HTTPError).toBe(true);
+    expect(error.response).toEqual({ foo: 'bar' });
   });
 });

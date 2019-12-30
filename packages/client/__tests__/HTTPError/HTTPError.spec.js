@@ -1,5 +1,5 @@
 import expect from 'expect';
-import HTTPError from '../../src/HTTPError';
+import { HTTPError } from '../../src';
 
 describe('HTTPError', () => {
   it('has error message', () => {

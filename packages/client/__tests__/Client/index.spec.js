@@ -1,14 +1,18 @@
-import Client from '../../src';
-import Transport from '../../src/Transport';
+import Client, { Transport } from '../../src';
 import MockTransport from '../../__mocks__/MockTransport';
 import expect from 'expect';
 
 // describe
 
 describe('Client', () => {
+  it('can set endpoint property', () => {
+    const client = new Client('https://wp.com/wp-json');
+    expect(client.path.endpoint).toBe('https://wp.com/wp-json');
+  });
+
   it('sets transport property', () => {
     const transport = new MockTransport();
-    const client = new Client({}, transport);
+    const client = new Client('', transport);
     expect(client.transport).toBe(transport);
   });
 
@@ -17,47 +21,18 @@ describe('Client', () => {
     expect(client.transport instanceof Transport).toBe(true);
   });
 
-  it('has default options', () => {
-    const client = new Client();
-    expect(client.options).toEqual({
-      endpoint: '',
+  it('has default path options', () => {
+    const client = new Client('https://wp.com/wp-json');
+    expect(client.path).toEqual({
+      endpoint: 'https://wp.com/wp-json',
       namespace: 'wp/v2',
-      resource: '',
-      config: {
-        referrer: 'wp-headless',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }
+      resource: 'posts'
     });
   });
 
-  it('merges options', () => {
-    const client = new Client({
-      endpoint: 'https://wordpress.test/wp-json',
-      config: {
-        referrer: 'WordMess',
-        foo: 'bar',
-        headers: {
-          'X-Foo': 'bar'
-        },
-        colors: ['red', 'green', 'blue']
-      }
-    });
-    expect(client.options).toEqual({
-      endpoint: 'https://wordpress.test/wp-json',
-      namespace: 'wp/v2',
-      resource: '',
-      config: {
-        referrer: 'WordMess',
-        foo: 'bar',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-Foo': 'bar'
-        },
-        colors: ['red', 'green', 'blue']
-      }
-    });
+  it('has empty global params by default', () => {
+    const client = new Client();
+    expect(client.globalParams).toEqual({});
   });
 
   it('has HTTP methods', () => {
@@ -85,26 +60,7 @@ describe('Client', () => {
       'search'
     ].forEach(method => {
       client[method]();
-      expect(client.options.resource).toBe(method);
+      expect(client.path.resource).toBe(method);
     });
-  });
-
-  it('attaches nonce header', () => {
-    const transport = new MockTransport();
-    let client = new Client({}, transport);
-    client.request('post');
-    expect(transport.post.mock.calls[0][2].headers['X-WP-Nonce']).toBe(
-      undefined
-    );
-    client = new Client(
-      {
-        nonce: 'mock-nonce-value'
-      },
-      transport
-    );
-    client.request('post');
-    expect(transport.post.mock.calls[1][2].headers['X-WP-Nonce']).toBe(
-      'mock-nonce-value'
-    );
   });
 });

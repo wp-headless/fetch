@@ -1,9 +1,8 @@
 import Client from '../../src';
 import expect from 'expect';
 
-const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json'
-});
+const endpoint = 'https://demo.wp-api.org/wp-json';
+const client = new Client(endpoint);
 
 describe('Fetch Integration Suite', () => {
   it('can fetch pages', () => {

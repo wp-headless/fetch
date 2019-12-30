@@ -1,7 +1,7 @@
 import { mutate } from 'swr';
 import requestToResponse from '../../utils/requestToResponse';
 import { useClient } from '../client';
-import { useFetch } from '../useFetch';
+import useFetch from '../useFetch';
 
 export default function usePost(id, params) {
   const namespace = 'wp/v2';

@@ -1,121 +1,111 @@
 import expect from 'expect';
 import Client from '../../src';
-import FormData from 'isomorphic-form-data';
 import MockTransport from '../../__mocks__/MockTransport';
 
 // setup
 
-const transport = new MockTransport();
 const endpoint = 'http://wordpress.test/wp-json';
-const client = new Client({ endpoint }, transport);
-
-const params = {
-  title: 'Hello World',
-  content: 'Welcome to the Wordpress API'
-};
+const transport = new MockTransport();
+const client = new Client(endpoint, transport);
 
 // describe
 
 describe('Client.request', () => {
   beforeEach(() => {
-    transport.resetMocks();
+    client.namespace('wp/v2').resource('posts');
+    transport.resetMock();
   });
 
-  it('accepts path as 2nd param', () => {
-    client.request('post', 'products');
-    expect(transport.post.mock.calls[0][0]).toBe(`${endpoint}/wp/v2/products`);
-  });
-
-  it('accepts params as 2nd param', () => {
-    client.request('post', params);
-    expect(transport.post.mock.calls[0][0]).toBe(`${endpoint}/wp/v2`);
-    expect(transport.post.mock.calls[0][1]).toEqual(params);
+  it('calls transport with correct HTTP method', () => {
+    client.request('posts/123', { method: 'POST' });
+    expect(transport.request.mock.calls[0][1].method).toBe('POST');
   });
 
   it('handles invalid paths', () => {
-    client.request('post', undefined);
-    expect(transport.post.mock.calls[0][0]).toBe(`${endpoint}/wp/v2`);
-    client.request('post', 123);
-    expect(transport.post.mock.calls[1][0]).toBe(`${endpoint}/wp/v2/123`);
-    client.request('post', null);
-    expect(transport.post.mock.calls[2][0]).toBe(`${endpoint}/wp/v2`);
-    client.request('post', {});
-    expect(transport.post.mock.calls[3][0]).toBe(`${endpoint}/wp/v2`);
-    client.request('post', 'products/variations/123');
-    expect(transport.post.mock.calls[4][0]).toBe(
-      `${endpoint}/wp/v2/products/variations/123`
+    client.request(undefined);
+    expect(transport.request.mock.calls[0][0]).toBe(`${endpoint}/wp/v2/posts`);
+
+    client.request(123);
+    expect(transport.request.mock.calls[1][0]).toBe(
+      `${endpoint}/wp/v2/posts/123`
+    );
+
+    client.request(null);
+    expect(transport.request.mock.calls[2][0]).toBe(`${endpoint}/wp/v2/posts`);
+
+    client.request('123/authors/123');
+    expect(transport.request.mock.calls[3][0]).toBe(
+      `${endpoint}/wp/v2/posts/123/authors/123`
     );
   });
 
-  it('merges global params', () => {
-    client.params = { a: '1', b: '2' };
-    client.request('post', params);
-    expect(transport.post.mock.calls[0][1]).toEqual({
-      ...client.params,
-      ...params
+  it('builds paths', () => {
+    client
+      .namespace('wc/v1')
+      .resource('products')
+      .request('432/variations/234');
+
+    expect(transport.request.mock.calls[0][0]).toBe(
+      `${endpoint}/wc/v1/products/432/variations/234`
+    );
+  });
+
+  it('sends json', () => {
+    const json = { foo: 'bar', bar: ['f', 'o', 'o'] };
+    client.request('posts/123', { json });
+    expect(transport.request.mock.calls[0][1].json).toEqual(json);
+  });
+
+  it('sends global url params', () => {
+    client.globalParams = { foo: 'bar', bar: ['f', 'o', 'o'] };
+    client.request('posts/123');
+    expect(transport.request.mock.calls[0][1].queryParams).toEqual({
+      foo: 'bar',
+      bar: ['f', 'o', 'o']
     });
+    client.globalParams = {};
   });
 
-  it('resets endpoint after request', () => {
-    client.endpoint('http://foo.bar/wp-json').request('post', '/products');
-    client.request('post', '/products');
-    expect(transport.post.mock.calls[0][0]).toBe(
-      'http://foo.bar/wp-json/wp/v2/products'
-    );
-    expect(transport.post.mock.calls[1][0]).toBe(
-      'http://wordpress.test/wp-json/wp/v2/products'
-    );
+  it('sends url params', () => {
+    const queryParams = { foo: 'bar', bar: ['f', 'o', 'o'] };
+    client.request('posts/123', { queryParams });
+    expect(transport.request.mock.calls[0][1].queryParams).toEqual(queryParams);
   });
 
-  it('can send a file', () => {
-    const formData = new FormData();
-    client.formData = formData;
-    client.params = { a: '1', b: '2' };
-    client.request('post', params);
-
-    const result = transport.post.mock.calls[0][1];
-    expect(result instanceof FormData).toEqual(true);
-    /**
-     * @todo Needs extending to check contents of FormData instance for expected values
-     **/
+  it('merges global and url params', () => {
+    client.globalParams = { foo: '1', bar: ['f', 'o', 'o'] };
+    const queryParams = { foo: '2' };
+    client.request('posts/123', { queryParams });
+    expect(transport.request.mock.calls[0][1].queryParams).toEqual({
+      foo: '2',
+      bar: ['f', 'o', 'o']
+    });
+    client.globalParams = {};
   });
 
-  it('merges global request config', () => {
-    client.options.config = {
-      referrer: 'wp-headless',
-      credentials: 'include',
+  it('merges request options', () => {
+    const options = {
+      data: { foo: 'bar' },
+      queryParams: { bar: 'foo' },
+      mode: 'no-cors',
+      integrity: 'BpfBw7ivV8q2jLiT13fxDYAe2tJllusRSZ273h2nFSE',
       headers: {
-        'Content-Type': 'application/json'
-      }
-    };
-    client.config = {
-      credentials: 'same-origin',
-      headers: {
+        'Content-Type': 'application/json',
         'X-Foo': 'bar'
       }
     };
-    client.request('post');
-    expect(transport.post.mock.calls[0][2]).toEqual({
-      referrer: 'wp-headless',
-      credentials: 'same-origin',
+
+    client.request('123', options);
+
+    expect(transport.request.mock.calls[0][1]).toEqual({
+      data: { foo: 'bar' },
+      queryParams: { bar: 'foo' },
+      mode: 'no-cors',
+      integrity: 'BpfBw7ivV8q2jLiT13fxDYAe2tJllusRSZ273h2nFSE',
       headers: {
         'Content-Type': 'application/json',
         'X-Foo': 'bar'
       }
     });
-  });
-
-  it('restores options after requesting', () => {
-    client
-      .endpoint('https://foo.com/wp-json')
-      .namespace('foo/v3')
-      .resource('foobies');
-    expect(client.options.endpoint).toEqual('https://foo.com/wp-json');
-    expect(client.options.namespace).toEqual('foo/v3');
-    expect(client.options.resource).toEqual('foobies');
-    client.request('post');
-    expect(client.options.endpoint).toEqual(endpoint);
-    expect(client.options.namespace).toEqual('wp/v2');
-    expect(client.options.resource).toEqual('');
   });
 });

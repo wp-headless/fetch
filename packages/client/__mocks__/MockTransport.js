@@ -1,21 +1,20 @@
 import 'core-js/features/promise';
 import mock from 'jest-mock';
-export default class MockTransport {
-  constructor(responses = {}) {
-    this.responses = responses;
-    this.resetMocks();
+
+export default class Transport {
+  constructor(response = {}) {
+    this.response = response;
+    this.resetMock();
   }
 
-  resetMocks() {
-    ['post', 'get', 'put', 'patch', 'delete'].forEach(verb => {
-      this[verb] = mock.fn((url, data, config) => this.request(verb));
-    });
+  resetMock() {
+    this.request = mock.fn((input, options) => this._request());
   }
 
-  request(verb) {
+  _request() {
     return new Promise((resolve, reject) => {
-      if (this.responses[verb]) {
-        resolve(this.responses[verb]);
+      if (this.response) {
+        resolve(this.response);
       }
     });
   }

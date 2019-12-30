@@ -1,27 +1,25 @@
 import expect from 'expect';
 import Client from '../../src';
-import MockTransport from '../../__mocks__/MockTransport';
 
 // setup
 
-const transport = new MockTransport();
 const endpoint = 'http://wordpress.test/wp-json';
-const client = new Client({ endpoint }, transport);
+const client = new Client(endpoint);
 
 // describe
 
 describe('Client.resource', () => {
-  beforeEach(() => {
-    transport.resetMocks();
+  it('has default path resource', () => {
+    expect(client.path.resource).toBe('posts');
   });
 
-  it('sets the current resorce path', () => {
-    client.resource('products');
-    expect(client.options.resource).toBe('products');
+  it('can set the current path resource', () => {
+    client.resource('pages');
+    expect(client.path.resource).toBe('pages');
   });
 
   it('has fluent interface', () => {
-    const returnValue = client.resource('products');
+    const returnValue = client.resource('taxonomies');
     expect(returnValue).toBe(client);
   });
 });

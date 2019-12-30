@@ -1,9 +1,9 @@
 # Browsers we support
-> 0.5%
-Chrome >= 73
+> 2%
+Chrome >= 75
 ChromeAndroid >= 75
-Firefox >= 67
-Edge >= 17
+Firefox >= 70
+Edge >= 18
 IE 11
 Safari >= 12.1
 iOS >= 11.3

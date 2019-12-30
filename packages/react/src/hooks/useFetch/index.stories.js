@@ -5,7 +5,7 @@ import Taxonomy from 'testing/components/Taxonomy';
 import TaxonomyList from 'testing/components/TaxonomyList';
 import Error from 'testing/components/Error';
 import { ClientProvider } from '../client';
-import { useFetch, useFetchBySlug } from '.';
+import useFetch from '.';
 
 /**
  * Setup
@@ -13,18 +13,14 @@ import { useFetch, useFetchBySlug } from '.';
 
 export default { title: 'useFetch' };
 
-const Fetcher = ({ namespace, resource, id, params, children }) => {
-  const { error, ...rest } = useFetch(namespace, resource, id, params);
-  return (
-    <div>
-      {children({ error, ...rest })}
-      <Error error={error} />
-    </div>
-  );
-};
-
-const SlugFetcher = ({ namespace, resource, slug, params, children }) => {
-  const { error, ...rest } = useFetchBySlug(namespace, resource, slug, params);
+const Fetcher = ({ namespace, resource, id, slug, params, children }) => {
+  const { error, ...rest } = useFetch({
+    namespace,
+    resource,
+    slug,
+    id,
+    params
+  });
   return (
     <div>
       {children({ error, ...rest })}
@@ -52,9 +48,9 @@ export const PageBySlug = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
       <h1>Page by slug</h1>
-      <SlugFetcher namespace="wp/v2" resource="pages" slug="sample-page">
+      <Fetcher namespace="wp/v2" resource="pages" slug="sample-page">
         {({ data, ...rest }) => <Post post={data} {...rest} />}
-      </SlugFetcher>
+      </Fetcher>
     </ClientProvider>
   );
 };
@@ -74,9 +70,9 @@ export const PostBySlug = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
       <h1>Post by slug</h1>
-      <SlugFetcher namespace="wp/v2" resource="posts" slug="hello-world">
+      <Fetcher namespace="wp/v2" resource="posts" slug="hello-world">
         {({ data, ...rest }) => <Post post={data} {...rest} />}
-      </SlugFetcher>
+      </Fetcher>
     </ClientProvider>
   );
 };
@@ -122,6 +118,21 @@ export const PagesFiltered = () => {
   );
 };
 
+export const PagesFiltered2 = () => {
+  return (
+    <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
+      <h1>Pages filtered</h1>
+      <Fetcher
+        namespace="wp/v2"
+        resource="pages"
+        params={{ search: 'Occaecati deleniti molestiae' }}
+      >
+        {({ data }) => <PostList posts={data} />}
+      </Fetcher>
+    </ClientProvider>
+  );
+};
+
 export const Posts = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
@@ -148,24 +159,29 @@ export const Taxonomies = () => {
  * Dependant fetching
  */
 
-const FetchPageAndAuthor = ({ children }) => {
-  const { data: page } = useFetch('wp/v2', 'pages', 2);
-  const { data: author } = useFetch(() => ['wp/v2', 'users', page.author]);
-  return children({ page, author });
+const FetchPostAndAuthor = ({ children }) => {
+  const { data: post } = useFetch({ resource: 'posts', id: 1 });
+  const { data: author } = useFetch(
+    post && {
+      resource: 'users',
+      id: post.author
+    }
+  );
+  return children({ post, author });
 };
 
 export const PageAndAuthor = () => {
   return (
     <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
       <h1>Page and author</h1>
-      <FetchPageAndAuthor>
-        {({ page, author }) => (
+      <FetchPostAndAuthor>
+        {({ post, author }) => (
           <div>
             <h2>Created by {author && author.name}</h2>
-            <Post post={page} />
+            <Post post={post} />
           </div>
         )}
-      </FetchPageAndAuthor>
+      </FetchPostAndAuthor>
     </ClientProvider>
   );
 };

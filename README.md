@@ -16,19 +16,17 @@ A Wordpress API client that works both in the browser and in Node. Tiny footprin
 - [Why?](#why)
 - [Usage](#usage)
 
-  - Client
+  - Fetch client
     - [Installation](#installation)
     - [Resources](#resources)
     - [HTTP methods](#http-methods)
     - [Request parameters](#request-parameters)
     - [Embed data](#embed-data)
-    - [Authentication](#authentication)
     - [Helper functions](#syntactical-sugar-helper-functions)
-  - React
+    - [Transport layer](#transport-layers)
+  - Fetch React
+    - Comming soon...
 
-- [Transport layers](#transport-layers)
-  - [Fetch](#fetch-1)
-  - [Others](#others)
 - [Examples](#examples)
 
 ## Why?
@@ -68,9 +66,7 @@ Creating a client instance bound to the endpoint of your Wordpress install:
 ```javascript
 import Client from '@wp-headless/client';
 
-const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json'
-});
+const client = new Client('https://demo.wp-api.org/wp-json');
 ```
 
 Fetching posts:
@@ -272,9 +268,7 @@ yarn add @wp-headless/client isomorphic-unfetch
 import 'isomorphic-unfetch';
 import Client from '@wp-headless/client';
 
-const client = new Client({
-  endpoint: 'https://demo.wp-api.org/wp-json'
-});
+const client = new Client('https://demo.wp-api.org/wp-json');
 ```
 
 ### Others

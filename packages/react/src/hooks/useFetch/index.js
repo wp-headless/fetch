@@ -1,47 +1,44 @@
-import { useQuery } from 'react-query';
+import { useQuery, useMutation, setQueryData } from 'react-query';
+import { isObject } from '@wp-headless/client';
+import join from 'url-join';
 import { useClient } from '../client';
 
-const defaultInterval = 30000;
+function makeKey(query) {
+  const { namespace = '', resource = '', id = '', slug = '' } = query;
+  const qs = join(namespace, resource, id.toString(), slug);
+  return [qs, query];
+}
 
-export default function useFetch(options = {}, config = {}) {
+export default function useFetch(query = {}, options = {}) {
   let key;
 
-  if (!options) {
+  if (!query) {
     key = false;
-  } else {
-    const { namespace, resource, id } = options;
-    key = [`${namespace}/${resource}/${id}`, options];
+  } else if (typeof query === 'function') {
+    key = () => makeKey(query());
+  } else if (isObject(query)) {
+    key = makeKey(query);
   }
 
-  const client = useClient();
+  const client = useClient('https://beamaustralia.local/wp-json');
 
-  const fetcher = options => {
-    return client.fetch(options);
+  const fetcher = query => client.query(query);
+
+  const context = useQuery(key, fetcher, options);
+
+  const mutator = attributes => {
+    const id = attributes.ID ? attributes.ID : query.id;
+    return client.update(id, attributes);
   };
 
-  const defaultConfig = {
-    refreshInterval: config.refresh ? defaultInterval : config.refreshInterval,
-    ...config
+  const [mutate] = useMutation(mutator);
+
+  const update = attributes => {
+    setQueryData(key, previous => ({ ...previous, ...attributes }), {
+      shouldRefetch: false
+    });
+    return mutate(attributes, { updateQuery: key });
   };
 
-  const { data, error, isLoading, refetch } = useQuery(
-    key,
-    fetcher,
-    defaultConfig
-  );
-
-  return {
-    data,
-    error,
-    refetch,
-    isFetching: isLoading,
-    update: attributes => {
-      client.namespace(namespace).resource(resource);
-      mutate(key, client.update(id, attributes));
-    },
-    destroy: attributes => {
-      client.namespace(namespace).resource(resource);
-      mutate(key, client.delete(id, attributes));
-    }
-  };
+  return { ...context, update };
 }

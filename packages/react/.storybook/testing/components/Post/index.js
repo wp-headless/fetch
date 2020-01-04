@@ -1,6 +1,10 @@
 import React from 'react';
 
-const Post = ({ post, fetch, update, destroy, isFetching }) => {
+function sanitize(data) {
+  return data.rendered ? data.rendered : data;
+}
+
+const Post = ({ post, refetch, update, isFetching }) => {
   if (!post) {
     return <p>Post not found</p>;
   }
@@ -14,16 +18,15 @@ const Post = ({ post, fetch, update, destroy, isFetching }) => {
             margin: '0 0 20px 0'
           }}
         >
-          <h1>{post.title.rendered}</h1>
+          <h1>{sanitize(post.title)}</h1>
           <p dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
         </div>
-        <button onClick={() => fetch()}>Refresh</button>
+        <button onClick={() => refetch()}>Refresh</button>
         <button
           onClick={() => update({ title: `Updated: ${post.title.rendered}` })}
         >
           Update
         </button>
-        <button onClick={() => destroy()}>Delete</button>
         {isFetching && <p>Refreshing...</p>}
       </div>
     </div>

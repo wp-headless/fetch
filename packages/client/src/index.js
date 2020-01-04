@@ -139,6 +139,22 @@ export default class Client {
     return this;
   }
 
+  query({ namespace, resource, id, slug, params } = {}) {
+    if (namespace) {
+      this.namespace(namespace);
+    }
+
+    if (resource) {
+      this.resource(resource);
+    }
+
+    if (slug) {
+      return this.slug(slug, params);
+    }
+
+    return this.get(id, params);
+  }
+
   request(path = '', options = {}) {
     const input = join(
       this.path.endpoint,

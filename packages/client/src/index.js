@@ -34,7 +34,6 @@ export class Transport {
 
     if (options.json && hasBody(options.method)) {
       options.body = JSON.stringify(options.json);
-      options.headers = { 'Content-Type': 'application/json' };
     }
 
     if (options.queryParams) {
@@ -49,6 +48,13 @@ export class Transport {
         if (!response.ok) {
           throw new HTTPError(data);
         }
+        
+        // make response headers accessible
+        data._headers = {};
+        for (let [key, value] of response.headers) {
+          data._headers[key] = value;
+        }
+
         return data;
       });
     });
@@ -82,6 +88,10 @@ export default class Client {
     namespace: 'wp/v2',
     resource: 'posts'
   };
+
+  headers = {
+    'Content-Type': 'application/json'
+  }
 
   globalParams = {};
 
@@ -155,6 +165,24 @@ export default class Client {
     return this.get(id, params);
   }
 
+  header(key, value = null) {
+    let headers = this.headers;
+
+    if (typeof key === 'string' && !value) {
+      return headers[key];
+    }
+
+    if (typeof key === 'string') {
+      headers[key] = value;
+    } else {
+      headers = { ...headers, ...key };
+    }
+
+    this.headers = { ...headers };
+
+    return this;
+  }
+
   request(path = '', options = {}) {
     const input = join(
       this.path.endpoint,
@@ -165,7 +193,8 @@ export default class Client {
 
     return this.transport.request(input, {
       ...options,
-      queryParams: merge(this.globalParams, options.queryParams)
+      queryParams: merge(this.globalParams, options.queryParams),
+      headers: this.headers
     });
   }
 }

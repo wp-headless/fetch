@@ -1,7 +1,6 @@
 import { useQuery, useMutation, setQueryData } from 'react-query';
-import { isObject } from '@wp-headless/client';
 import join from 'url-join';
-import { useClient } from '../client';
+import { useClient } from '../../';
 
 function makeKey(query) {
   const { namespace = '', resource = '', id = '', slug = '' } = query;
@@ -16,11 +15,11 @@ export default function useFetch(query = {}, options = {}) {
     key = false;
   } else if (typeof query === 'function') {
     key = () => makeKey(query());
-  } else if (isObject(query)) {
+  } else {
     key = makeKey(query);
   }
 
-  const client = useClient('https://beamaustralia.local/wp-json');
+  const client = useClient();
 
   const fetcher = query => client.query(query);
 

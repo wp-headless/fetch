@@ -1,13 +1,23 @@
 import React from 'react';
 import PostList from 'testing/components/PostList';
 import Post from 'testing/components/Post';
-import useFetch from '.';
+import { ClientProvider } from '../../';
+import { useFetch } from '.';
 
 /**
  * Setup
  */
 
-export default { title: 'useFetch' };
+export default {
+  title: 'Fetch hook',
+  decorators: [
+    Story => (
+      <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
+        <Story />
+      </ClientProvider>
+    )
+  ]
+};
 
 /**
  * Single item stories

@@ -1,5 +1,13 @@
-import { createContext } from 'react';
+import React, { createContext } from 'react';
+import createClient from '../../utils/createClient';
 
-const ClientContext = createContext({ client: null });
+export const ClientContext = createContext({ client: null });
 
-export default ClientContext;
+export const ClientProvider = ({ children, endpoint, transport }) => {
+  const client = createClient(endpoint, transport);
+  return (
+    <ClientContext.Provider value={{ client }}>
+      {children}
+    </ClientContext.Provider>
+  );
+};

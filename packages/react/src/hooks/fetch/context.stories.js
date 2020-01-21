@@ -1,9 +1,26 @@
 import React, { useContext } from 'react';
 import Post from 'testing/components/Post';
-import FetchProvider from './Provider';
-import FetchContext from './Context';
+import { ClientProvider } from '../../';
+import { FetchProvider, FetchContext } from '.';
 
-export default { title: 'Fetch Provider' };
+/**
+ * Setup
+ */
+
+export default {
+  title: 'Fetch context',
+  decorators: [
+    Story => (
+      <ClientProvider endpoint="https://demo.wp-api.org/wp-json">
+        <Story />
+      </ClientProvider>
+    )
+  ]
+};
+
+/**
+ * Stories
+ */
 
 const Page = () => {
   const { data: page } = useContext(FetchContext);
@@ -19,9 +36,7 @@ export const PageById = () => {
   return (
     <FetchProvider resource="pages" id={2}>
       <div>
-        <div>
-          <Page />
-        </div>
+        <Page />
       </div>
     </FetchProvider>
   );

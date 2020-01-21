@@ -282,7 +282,7 @@ import AxiosTransport from 'my-custom-axios-transport';
 
 const transport = new AxiosTransport();
 
-const client = new Client({ ...options }, transport);
+const client = new Client('https://demo.wp-api.org/wp-json', transport);
 ```
 
 # React

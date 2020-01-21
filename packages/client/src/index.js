@@ -85,8 +85,8 @@ export default class Client {
 
   globalParams = {};
 
-  constructor(endpoint = '', transport) {
-    this.transport = transport ? transport : new Transport();
+  constructor(endpoint = '', transport = new Transport()) {
+    this.transport = transport;
 
     this.path.endpoint = endpoint;
 

@@ -1,2 +1,2 @@
 export { useClient, ClientProvider } from './hooks/client';
-export useFetch from './hooks/useFetch';
+export { useFetch, FetchProvider, FetchContext } from './hooks/fetch';

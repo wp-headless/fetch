@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/react",
   "private": false,
-  "version": "0.9.1",
+  "version": "0.9.2",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "React bindings for wp-headless/fetch",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",
@@ -23,12 +23,12 @@
   "scripts": {
     "prebuild": "rimraf lib",
     "build": "yarn build:cjs && yarn build:esm",
-    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs",
-    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm",
+    "build:cjs": "NODE_ENV=production BABEL_ENV=cjs babel --config-file ../../babel.config.js ./src --out-dir ./lib/cjs --ignore src/**/*.spec.js,src/**/*.test.js",
+    "build:esm": "NODE_ENV=production BABEL_ENV=esm babel --config-file ../../babel.config.js ./src --out-dir ./lib/esm --ignore src/**/*.spec.js,src/**/*.test.js",
     "storybook": "start-storybook --port 9001"
   },
   "dependencies": {
-    "@wp-headless/client": "^0.8.0",
+    "@wp-headless/client": "^0.9.1",
     "react-query": "^0.3.23",
     "swr": "^0.1.13"
   },
@@ -36,11 +36,12 @@
     "react": "^16.11.0"
   },
   "devDependencies": {
-    "@storybook/react": "^5.2.8",
+    "@storybook/react": "^5.3.1",
     "enzyme": "^3.9.0",
     "enzyme-adapter-react-16": "^1.12.1",
     "react": "^16.11.0",
-    "react-dom": "^16.0.0"
+    "react-dom": "^16.0.0",
+    "react-hooks-testing-library": "^0.6.0"
   },
   "license": "MIT"
 }

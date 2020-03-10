@@ -31,7 +31,8 @@
     "build": "yarn workspaces run build",
     "start": "yarn workspaces run start",
     "publish": "yarn workspaces run publish --no-git-tag-version",
-    "test": "yarn build && yarn test:coverage && yarn test:browsers",
+    "prepublish": "yarn test",
+    "test": "yarn build && yarn test:unit",
     "test:unit": "jest --config testing/jest.config.js packages/**",
     "test:coverage": "yarn test:unit --coverage",
     "test:browsers": "NODE_ENV=test karma start testing/karma.conf.js"

@@ -34,7 +34,10 @@ export class Transport {
 
     if (options.json && hasBody(options.method)) {
       options.body = JSON.stringify(options.json);
-      options.headers = { 'Content-Type': 'application/json' };
+      options.headers = {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      };
     }
 
     if (options.queryParams) {

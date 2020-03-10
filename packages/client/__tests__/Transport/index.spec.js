@@ -72,7 +72,8 @@ it('can send json data', () => {
     transport.request('https://wp.com/wp-json', { method, json });
     expect(fetchMock.calls()[0][1].body).toEqual(JSON.stringify(json));
     expect(fetchMock.calls()[0][1].headers).toEqual({
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      Accept: 'application/json'
     });
   });
 });

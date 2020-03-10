@@ -27,7 +27,10 @@ export default function useFetch(query = {}, options = {}) {
 
   const mutator = attributes => {
     const id = attributes.ID ? attributes.ID : query.id;
-    return client.update(id, attributes);
+    return client
+      .namespace(query.namespace)
+      .resource(query.resource)
+      .update(id, attributes);
   };
 
   const [mutate] = useMutation(mutator);

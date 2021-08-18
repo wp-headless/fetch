@@ -1,20 +1,10 @@
 import Client from '../../src';
 import expect from 'expect';
 
-const endpoint = 'https://demo.wp-api.org/wp-json';
+const endpoint = 'https://wordpress.org/news/wp-json';
 const client = new Client(endpoint);
 
 describe('Fetch Integration Suite', () => {
-  it('can fetch pages', () => {
-    return client
-      .pages()
-      .get()
-      .then(pages => {
-        expect(typeof pages[0].title.rendered).toBe('string');
-        expect(pages[0].type).toBe('page');
-      });
-  });
-
   it('can fetch posts', () => {
     return client
       .posts()

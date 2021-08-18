@@ -107,6 +107,7 @@ export default class Client {
         }
         return this.request(path, {
           method: METHODS[method],
+          mode: 'cors',
           json: params
         });
       };

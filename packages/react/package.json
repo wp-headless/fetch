@@ -1,7 +1,7 @@
 {
   "name": "@wp-headless/react",
   "private": false,
-  "version": "0.9.5",
+  "version": "0.9.8",
   "repository": "https://github.com/wp-headless/fetch",
   "description": "React bindings for wp-headless/fetch",
   "author": "Andrew McLagan <andrewmclagan@gmail.com>",
@@ -28,7 +28,7 @@
     "storybook": "start-storybook --port 9001"
   },
   "dependencies": {
-    "@wp-headless/client": "^0.9.5",
+    "@wp-headless/client": "^0.9.8",
     "react-query": "0.3.23",
     "swr": "^0.1.13"
   },

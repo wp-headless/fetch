@@ -9,7 +9,7 @@
     "@wp-headless/babel-preset": "^0.1.0",
     "babel-jest": "^24.9.0",
     "babel-loader": "^8.0.6",
-    "codecov": "^3.6.1",
+    "codecov": "^3.8.3",
     "expect": "^21.0.0",
     "husky": "^3.0.9",
     "isomorphic-fetch": "^2.2.1",

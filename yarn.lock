@@ -2071,6 +2071,14 @@
     "@babel/runtime" "^7.7.2"
     core-js "3"
 
+"@wp-headless/client@0.9.6":
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/@wp-headless/client/-/client-0.9.6.tgz#7fec9c11935f3eb4ccedf8967cf44eba45636198"
+  integrity sha512-q90R39MRCgPS0DpXKHjeKqtLBoQpoR+1YptZYzXZf3zPyH+xPdLorepGgfgmyrshAICwLhl4ebeljlC9nDPCrQ==
+  dependencies:
+    "@wp-headless/qs-encode" "^0.1.0"
+    url-join "^4.0.0"
+
 "@wp-headless/qs-encode@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@wp-headless/qs-encode/-/qs-encode-0.1.0.tgz#a7cd359fd002d6f78468265675c1f3ba3dac72ea"
@@ -4103,9 +4111,9 @@ decamelize@^1.2.0:
   integrity sha1-9lNNFRSCabIDUue+4m9QH5oZEpA=
 
 decode-uri-component@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.0.tgz#eb3913333458775cb84cd1a1fae062106bb87545"
-  integrity sha1-6zkTMzRYd1y4TNGh+uBiEGu4dUU=
+  version "0.2.2"
+  resolved "https://registry.yarnpkg.com/decode-uri-component/-/decode-uri-component-0.2.2.tgz#e69dbe25d37941171dd540e024c444cd5188e1e9"
+  integrity sha512-FqUYQ+8o158GyGTrMFJms9qh3CqTKvAqgqsTnkLI8sKu0028orqBhxNMFkFen0zGyg6epACD32pjVk58ngIErQ==
 
 deep-equal@^1.1.1:
   version "1.1.1"

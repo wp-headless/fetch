@@ -2071,6 +2071,14 @@
     "@babel/runtime" "^7.7.2"
     core-js "3"
 
+"@wp-headless/client@0.9.6":
+  version "0.9.6"
+  resolved "https://registry.yarnpkg.com/@wp-headless/client/-/client-0.9.6.tgz#7fec9c11935f3eb4ccedf8967cf44eba45636198"
+  integrity sha512-q90R39MRCgPS0DpXKHjeKqtLBoQpoR+1YptZYzXZf3zPyH+xPdLorepGgfgmyrshAICwLhl4ebeljlC9nDPCrQ==
+  dependencies:
+    "@wp-headless/qs-encode" "^0.1.0"
+    url-join "^4.0.0"
+
 "@wp-headless/qs-encode@^0.1.0":
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/@wp-headless/qs-encode/-/qs-encode-0.1.0.tgz#a7cd359fd002d6f78468265675c1f3ba3dac72ea"
@@ -9011,9 +9019,9 @@ qs@^6.6.0:
   integrity sha512-Cxm7/SS/y/Z3MHWSxXb8lIFqgqBowP5JMlTUFyJN88y0SGQhVmZnqFK/PeuMX9LzUyWsqqhNxIyg0jlzq946yA==
 
 qs@~6.5.2:
-  version "6.5.2"
-  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.2.tgz#cb3ae806e8740444584ef154ce8ee98d403f3e36"
-  integrity sha512-N5ZAX4/LxJmF+7wN74pUD6qAh9/wnvdQcjq9TZjevvXzSUo7bfmw91saqMjzGS2xq91/odN2dW/WOl7qQHNDGA==
+  version "6.5.3"
+  resolved "https://registry.yarnpkg.com/qs/-/qs-6.5.3.tgz#3aeeffc91967ef6e35c0e488ef46fb296ab76aad"
+  integrity sha512-qxXIEh4pCGfHICj1mAJQ2/2XVZkjCDTcEgfoSQxc/fYivUZxTkk7L3bDBJSoNrEzXI17oUO5Dp07ktqE5KzczA==
 
 query-string@^4.1.0:
   version "4.3.4"
